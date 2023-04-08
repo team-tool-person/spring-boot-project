@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teamsea.mapper.UserMapper">
+	<insert id="insertUsers">
+		insert into users(name) values
+		<foreach item="name" index="index" collection="names"
+			separator=","
+		>
+		(#{name})
+		</foreach>
+	</insert>
+	<!--  最简单的实现方式,但是会有健壮性,和性能问题
+	<delete id="deleteUsers">
+		delete from users where name in
+		
+		<foreach item="name" index="index" collection="names"
+			open="(" close=")" separator="," 
+		>
+			#{name}
+		</foreach>
+		
+	</delete>
+	-->
+	<!--  对健壮性进行优化 
+		使用 choose 来对条件语句进行优化
+		使用 or 语句来对 in语句进行性能优化
+	-->
+	<delete id="deleteUsers">
+		delete from users
+			<where>
+				<choose>
+					<when test="names != null and names.length >0">
+						<foreach collection="names" separator="or" item="name">
+							name = #{name}
+						</foreach>
+					</when>
+					<otherwise>
+						1 = 2
+					</otherwise>	
+				</choose>
+			</where>
+	</delete>
+</mapper> 
