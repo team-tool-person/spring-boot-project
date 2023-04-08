@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<h1>商品列表</h1>
+	<hr>
+	<div>
+		<table>
+			<tr>
+				<th>编号</th>
+				<th>名称</th>
+				<th>数量</th>
+				<th>删除</th>
+			</tr>
+			<tr th:each="g:${goods}">
+				<td th:text="${g.id}"></td>
+				<td th:text="${g.name}"></td>
+				<td th:text="${g.num}"></td>
+				<td><a th:href="@{/goods/delete(id=${g.id},name=${g.name})}">删除</a></td>
+			</tr>
+
+		</table>
+	</div>
+
+	<div>
+		<h1>添加商品</h1>
+		<hr />
+		<form action="http://localhost:8080/goods/add" method="post">
+			<table>
+
+				<tr>
+					<td>
+						<label for="id">id:</label>
+					</td>
+					<td>
+						<input type="number" name="id" id="id">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="name">name:</label>
+					</td>
+					<td>
+						<input type="text" name="name" id="name">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="num">num:</label>
+					</td>
+					<td>
+						<input type="number" name="num" id="num">
+					</td>
+				</tr>
+			</table>
+			<input type="submit" value="添加">
+		</form>
+
+	</div>
+
+</body>
+
+
+</html>

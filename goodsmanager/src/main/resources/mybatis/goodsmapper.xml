@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teamsea.dao.GoodsMapper">
+	<!-- 插入语句增加语句 -->
+	<insert id="addGood">
+		
+		insert into goods(id,name,num) value
+		(#{id},#{name},#{num})
+		
+	</insert>
+	<!-- 删除语句 伪删除 -->
+	<update id="deleteGood">
+		update goods set isdelete = 0 where id = #{id} and name = #{name} and isdelete = 1
+	</update>
+	<!-- 更新语句 -->
+	<update id="updateGood">
+		
+		update goods set id=#{id},name=#{name},num=#{num} where id = #{id}
+		
+	</update>
+	<!-- 查询语句 -->
+	<select id="goodsList" resultType="com.teamsea.pojo.Goods">
+		
+		select id,name,num from goods where isdelete = 1
+		
+	</select>
+	<!--商品是否存在,id和name是否相同  -->
+	<select id="isExist" resultType="java.lang.Integer">
+		
+		select COUNT(id) from goods where id = #{id} and name = #{name} and isdelete != 0
+		
+	</select>
+</mapper>
