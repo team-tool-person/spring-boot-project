@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teamsea.dao.ActivityDao">
+	<!-- 插入语句增加语句 -->
+	<insert id="createActivity">
+		
+	INSERT INTO tb_activity
+	 (id, title, category, startTime, endTime, remark, state, createdTime, createUser) 
+	VALUES
+	(#{id},#{title},#{category},#{startTime},#{endTime},#{remark},#{state},#{createdTime},#{createUser})
+		
+	</insert>
+	<!-- 删除语句 伪删除 -->
+	<update id="deleteActivity">
+		
+		UPDATE tb_activity SET 
+		isdelete = 0 
+		where id=#{id}
+		
+	</update>
+	<!-- 更新语句 -->
+	<update id="updateActivity">
+		
+		UPDATE tb_activity SET 
+			title=#{title}, 
+			category=#{category}, 
+			startTime=#{startTime}, 
+			endTime=#{endTime}, 
+			remark=#{remark}, 
+			state=#{state}, 
+			createdTime=#{createdTime}, 
+			createUser=#{createUser}
+		WHERE isdelete=1 and id=#{id};
+
+		
+	</update>
+	<!-- 查询语句 -->
+	<select id="getActivityts" resultType="com.teamsea.pojo.Activity">
+		
+		select * from tb_activity where isdelete = 1
+		
+	</select>
+	<!--商品是否存在,id和name是否相同  -->
+	<select id="isExist" resultType="java.lang.Integer">
+		
+		select COUNT(id) from tb_activity where id = #{id} and title = #{title} and isdelete != 0
+		
+	</select>
+</mapper>

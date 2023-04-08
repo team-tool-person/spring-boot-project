@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>活动列表</title>
+</head>
+
+<body>
+	<div>
+
+		<table>
+
+			<thead>
+				<th>
+					活动id
+				</th>
+				<th>
+					标题
+				</th>
+				<th>
+					等级
+				</th>
+				<th>
+					开始时间
+				</th>
+				<th>
+					结束时间
+				</th>
+				<th>
+					状态
+				</th>
+			</thead>
+			<tr th:each="a:${activities}">
+				<td th:text=${a.id}></td>
+				<td th:text=${a.title}></td>
+				<td th:text=${a.category}></td>
+				<td th:text=${a.startTime}></td>
+				<td th:text=${a.endTime}></td>
+				<td th:text=${a.state}></td>
+			</tr>
+
+		</table>
+
+	</div>
+</body>
+
+</html>
