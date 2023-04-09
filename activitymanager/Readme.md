@@ -20,6 +20,66 @@ private LocalDateTime endTime; // 结束时间
 使用位置:	`com.teamsea.servicetest.ActivityTest`
 
 ```java
+	
+	/**
+	 * 使用Logger org.slf4j.Logger
+	 * 
+	 * 在使用logger对象时,要创建成一个静态常量
+	 * 
+	 * 1. 稳定的运行日志框架
+	 * 
+	 * 2. 在类加载前就是用这个框架
+	 */
+	private static final Logger logger = LoggerFactory.getLogger(ActivityServiceImpl.class);
+	
+```
+
+### 1.3 本项目使用了健康检查
+
+本项目使用了 Spring Boot Actuator 进行检查各种配置等信息
+
+## 1.4 本项目使用了热部署
+
+本项目使用了 Spring Boot DevTools 进行热部署
+
+## 1.5 本项目使用了Lombok插件
+
+本项目使用了 LomBok 插件来实现一些自动化的方法编写
+
+`com.teamsea.pojo.Activity`,
+
+```java
+	/**
+ * 活动类 使用LomBok插件进行优化
+ * 
+ * 使用注解@Data生成Getter and Setter ToString
+ * 
+ * 使用注解@NoArgsConstructor生成无参构造
+ * 
+ * 使用注解@AllArgsConstructor生成全参构造
+ */
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Activity {}
+
+```
+
+使用位置:`com.teamsea.servicetest.ServiceUpdateSQLTest`
+
+```java
+@SpringBootTest
+@Slf4j
+public class ServiceUpdateSQLTest {
+	
+	@Test
+	public void getActivitiesListTest() {
+		// 使用Logger
+		log.info("start: {}", System.currentTimeMillis());
+		log.info(service.getActivities().toString());
+		log.info("end: {}", System.currentTimeMillis());
+	}
 
 ```
 

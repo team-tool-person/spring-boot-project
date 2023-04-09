@@ -1,15 +1,15 @@
 package com.teamsea.servicetest;
 
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.teamsea.service.ActivityService;
-import com.teamsea.service.impl.ActivityServiceImpl;
+
+import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
+@Slf4j
 public class ServiceUpdateSQLTest {
 
 	/**
@@ -21,7 +21,10 @@ public class ServiceUpdateSQLTest {
 	 * 
 	 * 2. 在类加载前就是用这个框架
 	 */
-	private static final Logger logger = LoggerFactory.getLogger(ActivityServiceImpl.class);
+	//使用Lombok插件进行优化
+//	private static final Logger logger = LoggerFactory.getLogger(ActivityServiceImpl.class);
+	
+	
 
 	@Autowired
 	private ActivityService service;
@@ -33,9 +36,9 @@ public class ServiceUpdateSQLTest {
 	@Test
 	public void getActivitiesListTest() {
 		// 使用Logger
-		logger.info("start: {}", System.currentTimeMillis());
-		logger.info(service.getActivities().toString());
-		logger.info("end: {}", System.currentTimeMillis());
+		log.info("start: {}", System.currentTimeMillis());
+		log.info(service.getActivities().toString());
+		log.info("end: {}", System.currentTimeMillis());
 	}
 
 	/**
