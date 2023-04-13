@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!-- 数据库连接信息 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/springboot?serverTimezone=UTC" userId="root" password="liliumx2">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 
+            JavaBean的生成策略 targetPackage=要生成包的位置 targetProject=要生成的文件夹下
+        -->
+        <javaModelGenerator targetPackage="com.teamsea.model" targetProject="src/main/java">
+            <!--
+                enableSubPackages 是否使用子包
+                trimStrings 去除字段的空格
+            -->
+            <property name="enableSubPackages" value="true"/>
+									<property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!-- 
+            mapper.xm的生成策略
+         -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 
+            生成mapper接口类生成策略
+        -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.teamsea.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 
+            要进行逆向工程的表
+
+            tableName = 表名
+            domainObjectName = 生成的类名
+        -->
+        <table tableName="goods" domainObjectName="Goods"/>
+    </context>
+</generatorConfiguration>
