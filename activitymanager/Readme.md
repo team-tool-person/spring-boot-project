@@ -83,6 +83,24 @@ public class ServiceUpdateSQLTest {
 
 ```
 
+## 1.6 输出JSON数据
+
+本项目使用了`@ResponseBody`注解来对向前端发送的数据设置为JSON数据条
+
+使用位置:`com.teamsea.controller.ActivityController`
+
+```java
+	@RequestMapping("dofindactivities")
+	@ResponseBody
+	public List<Activity> doFindActivities() {
+		List<Activity> list = service.getActivities();
+		return list;
+	}
+
+```
+
+
+
 
 ## 2. 关于一个万能的参数纠错方法
 
@@ -107,7 +125,7 @@ public abstract boolean rule(String name, Object value);
 
 ```
 
-## 关于纠错使用的方法问题
+### 关于纠错使用的方法问题
 
 报错信息应该万能还是要省略
 

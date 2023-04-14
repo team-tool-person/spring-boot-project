@@ -44,7 +44,37 @@
 
 		</table>
 
+
+
+		<table id="table"">
+
+		</table>
 	</div>
 </body>
+<script>
+	//创建XMLHttpRequest对象
+	var httpRequest = new XMLHttpRequest();
+
+	// 定义参数:
+	var params = "";// 发送请求的参数
+	var url = " dofindactivities";// 请求的地址 
+	//创建回调函数 
+	httpRequest.onreadystatechange=function doGetActivities() { 
+		if ( 
+			//连接状态 4 表示访问已经停止 
+			httpRequest.readyState == 4 && 
+			// 200 表示访问访问正常 
+			httpRequest.readyState==200 ) {
+		// 将JSON数据进行输入 
+		var activities=JSON.parse(httpRequest.responseText); 
+		var table=document.getElementById("table"); 
+		
+		} 
+	}
+	//创建连接
+	httpRequest.open("GET", url, true); 
+	//发送异步请求 
+	httpRequest.send(); 
+	</script>
 
 </html>
