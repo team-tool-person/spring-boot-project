@@ -30,7 +30,13 @@ public interface AdminService {
 	 * @return 返还一个完整的admin参数
 	 */
 	public Admin adminLogin(Admin admin);
-
+	
+	/**
+	 * 验证管理员是否存在
+	 * */
+	public boolean adminIsExit(Admin admin);
+	
+	
 	/**
 	 * 对教师的操作
 	 */

@@ -42,7 +42,8 @@
                             </li>
                             <li>
                                 <a href="#">学生入口</a>
-                            </li> <li>
+                            </li>
+                            <li>
                                 <a href="#">管理员入口</a>
                             </li>
                         </ul>
@@ -52,7 +53,7 @@
                             </div> <button type="submit" class="btn btn-default">搜索</button>
                         </form>
                         <ul class="nav navbar-nav navbar-right">
-                           
+
                             <li class="dropdown" style="padding-right: 20px;">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">关于本系统<strong
                                         class="caret"></strong></a>
@@ -103,10 +104,10 @@
                     </div>
                     <div class="checkbox">
                         <label><input type="checkbox" />记住我</label>
-                    </div> 
-                    <!-- 提交按钮的id值为submit -->    
+                    </div>
+                    <!-- 提交按钮的id值为submit -->
                     <button id="submit" type="submit" class="btn btn-default">登录</button>
-                
+
                 </form>
             </div>
             <div class="col-md-4 column">
@@ -117,7 +118,7 @@
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
-	//对表单进行一个处理
+    //对表单进行一个处理
     /**
      * 当页面加载完毕后,对页面进行一个处理
      * 
@@ -127,18 +128,78 @@
      * 
     */
     // 获取表单元素
-    var  $form = $('#login');
-
-   // 当页面准备完毕后
-    $(function(){
-        
-       $('#submit').click(login);
-
+    var $form = $('#login');
+    var flag = true;
+    // 当页面准备完毕后
+    $(function () {
+        $('#submit').click(function (event) {
+            event.preventDefault(); // 防止默认表单提交
+            login(); // 调用登录函数
+        });
     });
 
 
-    function login(){
-        var name = $('');
+    function login() {
+        var name = $('#name').val();
+        var password = $('#password').val();
+        //TODO:使用AJAX将数据发送到服务器
+        $.ajax({
+            url: 'login', // 请求地址
+            type: 'GET', // 请求方法
+            data: {
+                'name': name,
+                'password': password
+            },
+
+            dataType: "json",
+
+            success: function (data) {
+                getData(data);
+            },
+
+            error: function (error) {
+                console.log(error);
+
+            }
+        });
+    }
+
+    /**
+     * 请求成功的回调函数
+     * 
+    */
+    function getData(data) {
+
+        // 如果没有登录成功
+        if (data == null) {
+            if (flag = true) {
+
+                flag = false;
+                loginTilp();
+
+            }
+        } else {
+            var id = data.id;
+            var name = data.name
+
+            window.location.href = "index?id="+id+"&name="+name;
+        }
+    }
+
+
+
+    /**
+     * 登录失败在输入后加上用户名或密码错误
+     * 
+    */
+    function loginTilp(data) {
+        var tips = $("<div><div>");
+        tips.css({
+            'color': 'red',
+        });
+        tips.text(data);
+
+        $('#login').append("用户名或密码错误");
     }
 </script>
 

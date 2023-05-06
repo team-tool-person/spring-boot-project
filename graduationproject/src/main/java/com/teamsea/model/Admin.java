@@ -132,4 +132,12 @@ public class Admin {
     public void setIsdelete(Boolean isdelete) {
         this.isdelete = isdelete;
     }
+
+	@Override
+	public String toString() {
+		return "Admin [id=" + id + ", name=" + name + ", password=" + password + ", isdelete=" + isdelete + "]";
+	}
+    
+    
+    
 }
