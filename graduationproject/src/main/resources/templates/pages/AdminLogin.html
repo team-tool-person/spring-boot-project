@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <!--
+        引入BootStrap框架
+    -->
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle
+                                navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span
+                                class="icon-bar"></span></button> <a class="navbar-brand" href="#">主页</a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="active">
+                                <a href="#">教师入口</a>
+                            </li>
+                            <li>
+                                <a href="#">学生入口</a>
+                            </li> <li>
+                                <a href="#">管理员入口</a>
+                            </li>
+                        </ul>
+                        <form class="navbar-form navbar-left" role="search">
+                            <div class="form-group">
+                                <input type="text" class="form-control" />
+                            </div> <button type="submit" class="btn btn-default">搜索</button>
+                        </form>
+                        <ul class="nav navbar-nav navbar-right">
+                           
+                            <li class="dropdown" style="padding-right: 20px;">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">关于本系统<strong
+                                        class="caret"></strong></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#">系统文献</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">系统日志</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">健康检查</a>
+                                    </li>
+                                    <li class="divider">
+                                    </li>
+                                    <li>
+                                        <a href="#">作者页面</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                </nav>
+            </div>
+        </div>
+        <div class="row clearfix" style="margin-top: 10%;">
+            <div class="col-md-12 column">
+                <div class="page-header">
+                    <h1>
+                        管理员登录 <small>毕业设计管理系统</small>
+                    </h1>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-2 column">
+            </div>
+            <div class="col-md-6 column">
+                <!-- 登录表单 -->
+                <form role="form" id="login">
+                    <div class="form-group">
+                        <label for="name">用户名</label><input type="text" class="form-control" id="name" name="name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">密码</label><input type="password" class="form-control" id="password"
+                            name="password" />
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" />记住我</label>
+                    </div> 
+                    <!-- 提交按钮的id值为submit -->    
+                    <button id="submit" type="submit" class="btn btn-default">登录</button>
+                
+                </form>
+            </div>
+            <div class="col-md-4 column">
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+	//对表单进行一个处理
+    /**
+     * 当页面加载完毕后,对页面进行一个处理
+     * 
+     * 给登录表单按钮添加一个事件绑定:
+     * 
+     * 当单击按钮后,将表单填入的数据传入服务器
+     * 
+    */
+    // 获取表单元素
+    var  $form = $('#login');
+
+   // 当页面准备完毕后
+    $(function(){
+        
+       $('#submit').click(login);
+
+    });
+
+
+    function login(){
+        var name = $('');
+    }
+</script>
+
+</html>

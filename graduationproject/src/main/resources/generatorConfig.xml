@@ -6,7 +6,7 @@
 <generatorConfiguration>
     <context id="DB2Tables" targetRuntime="MyBatis3Simple">
         <!-- 数据库连接信息 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/graduationproject?serverTimezone=UTC" userId="root" password="liliumx2">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/graduationproject?serverTimezone=UTC" userId="root" password="lilium">
         </jdbcConnection>
 
         <javaTypeResolver>
@@ -49,5 +49,6 @@
         <table tableName="teacher" domainObjectName="Teacher"></table>
         <table tableName="course" domainObjectName="Course"></table>
         <table tableName="workfile" domainObjectName="Work"></table>
+        <table tableName="admin" domainObjectName="Admin"></table>
     </context>
 </generatorConfiguration>
