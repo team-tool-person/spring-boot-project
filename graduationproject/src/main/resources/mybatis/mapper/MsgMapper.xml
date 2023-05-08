@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teamsea.mapper.MsgMapper">
+	<!-- insert -->
+	<insert id="insertMsg">
+		INSERT INTO msg
+		(title, msg, teacherId, studentId)
+		VALUES
+		(#{title}, #{msg}, #{teacherId}, #{studentId})
+
+	</insert>
+	<!-- delete -->
+	<delete id="deleteMsgById">
+		DELETE FROM msg
+		WHERE id=#{id}
+	</delete>
+	<!-- update -->
+	<update id="updataMsgById">
+		UPDATE msg
+		SET title=#{title}, msg=#{msg}, teacherId=#{teacherId}, studentId=#{studentId}
+		WHERE id=#{id}
+	</update>
+	
+	<update id="solvedMsg">
+		UPDATE msg
+		SET solved=1
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 全选 -->
+	<select id="seleteAll" resultType="com.teamsea.model.msg">
+		SELECT * FROM msg
+	</select>
+	
+	<!-- 选择没有被解决的MSG -->
+	<select id="selectNotSolved" resultType="com.teamsea.model.msg">
+		SELECT * FROM msg
+		WHERE solved = 0
+	</select>
+	
+	
+</mapper>
