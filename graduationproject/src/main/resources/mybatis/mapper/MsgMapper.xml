@@ -28,12 +28,12 @@
 	</update>
 	
 	<!-- 全选 -->
-	<select id="seleteAll" resultType="com.teamsea.model.msg">
+	<select id="seleteAll" resultType="com.teamsea.model.Msg">
 		SELECT * FROM msg
 	</select>
 	
 	<!-- 选择没有被解决的MSG -->
-	<select id="selectNotSolved" resultType="com.teamsea.model.msg">
+	<select id="selectNotSolved" resultType="com.teamsea.model.Msg">
 		SELECT * FROM msg
 		WHERE solved = 0
 	</select>

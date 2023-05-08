@@ -1,5 +1,7 @@
 package com.teamsea.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.teamsea.model.Admin;
@@ -19,7 +21,6 @@ import com.teamsea.model.Teacher;
  * 
  */
 
-@Service
 public interface AdminService {
 
 	/**
@@ -40,7 +41,14 @@ public interface AdminService {
 	/**
 	 * 对教师的操作
 	 */
-
+	
+	/**
+	 * 获取教师
+	 * 
+	 * */
+	public List<Teacher> getTeachers();
+	
+	
 	/**
 	 * 增加教师
 	 * 
@@ -69,7 +77,14 @@ public interface AdminService {
 	/**
 	 * 对学生的管理
 	 */
-
+	
+	
+	/**
+	 * 查找学生信息
+	 * 
+	 * */
+	public List<Student> getStudents();
+	
 	/**
 	 * 增加学生
 	 * 
