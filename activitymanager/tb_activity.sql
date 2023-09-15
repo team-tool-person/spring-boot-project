@@ -1,4 +1,4 @@
---创建表
+-- 创建表
 
 -- springboot.tb_activity definition
 
