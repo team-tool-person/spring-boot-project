@@ -1,9 +1,13 @@
 package com.teamsea.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teamsea.mapper.AdminMapper;
+import com.teamsea.mapper.StudentMapper;
+import com.teamsea.mapper.TeacherMapper;
 import com.teamsea.model.Admin;
 import com.teamsea.model.Student;
 import com.teamsea.model.Teacher;
@@ -14,6 +18,12 @@ public class AdminServiceImpl implements AdminService {
 
 	@Autowired
 	private AdminMapper mapper;
+
+	@Autowired
+	private TeacherMapper teacherMapper;
+
+	@Autowired
+	private StudentMapper studentMapper;
 
 	/**
 	 * 管理员登录
@@ -90,6 +100,22 @@ public class AdminServiceImpl implements AdminService {
 	public boolean removeStudent(Student student) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public List<Teacher> getTeachers() {
+
+		List<Teacher> teachers = teacherMapper.selectAll();
+
+		return teachers;
+	}
+
+	@Override
+	public List<Student> getStudents() {
+
+		List<Student> students = studentMapper.selectAll();
+
+		return students;
 	}
 
 }

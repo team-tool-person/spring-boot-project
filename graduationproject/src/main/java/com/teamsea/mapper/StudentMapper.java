@@ -45,4 +45,7 @@ public interface StudentMapper {
      * @mbg.generated Sat May 06 16:20:09 CST 2023
      */
     int updateByPrimaryKey(Student record);
+    
+    
+    
 }

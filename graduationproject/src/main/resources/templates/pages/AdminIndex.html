@@ -38,11 +38,14 @@
 
                             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                                 <ul class="nav navbar-nav">
-                                    <li class="active">
-                                        <a href="#">教师信息管理</a>
+                                    <li>
+                                        <a>信息管理</a>
                                     </li>
                                     <li>
-                                        <a href="#">学会信息管理</a>
+                                        <a id="teacher">教师管理</a>
+                                    </li>
+                                    <li>
+                                        <a id="student">学生管理</a>
                                     </li>
                                 </ul>
                                 <form class="navbar-form navbar-left" role="search">
@@ -95,7 +98,7 @@
                 <div class="row clearfix">
                     <div class="col-md-2 column">
                         <h3 class="text-error">
-                            信息修正管理
+                            信息管理
                         </h3>
                     </div>
                     <div class="col-md-6 column">
@@ -105,51 +108,10 @@
                     </div>
                 </div>
                 <div class="row clearfix">
-                    <div class="col-md-12 column">
-                        <table class="table table-hover table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        编号
-                                    </th>
-                                    <th>
-                                        标题
-                                    </th>
-                                    <th>
-                                        教师姓名
-                                    </th>
-                                    <th>
-                                        学生姓名
-                                    </th>
-                                    <th>
-                                        内容
-                                    </th>
-                                    <th>
-                                        是否已经处理
-                                    </th>
-                                    <th>
-                                        处理
-                                    </th>
-                                    <th>
-                                        操作
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody">
-                                <!--
-                                    已知给<tr>标签提供了三种不同的样式
-                                    1. success 绿色
-                                    2. warning 橘色
-                                    3. info 蓝色
+                    <div class="col-md-12 column" id="show">
 
-                                -->
-                                <!-- 使用js填充表格信息 
-                                    填充的信息包括
-                                    id,title,teacherName,studentName,msg,solved
-                                    ;:の
-                                -->
-                            </tbody>
-                        </table>
+
+
                     </div>
                 </div>
             </div>
@@ -158,71 +120,296 @@
 </body>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 
+<!--
+    定义展示的DIV
+
+-->
 <script>
 
-    // 向tbody内填充信息
-    var tbody = $('#tbody');
+    // 在id为show中的div进行展示
+    var $show = $('#show');
 
+    // 在页面加载时进行新建表格和加载数据
     $(function () {
-
         getMsg();
-
     });
+</script>
 
+<!-- Msg展示数据 -->
+<script>
+
+    // 获取msg
     function getMsg() {
-
         $.ajax({
             type: "GET",
             url: "getMsgs",
             dataType: "JSON",
-            success: function (data) {
-                console.log(data);
-                // 将JSON数据进行处理,显示在页面上
-                showData(data);
+            success: function (msgs) {
+                console.log(msgs);
+                showMsg(msgs);
             },
             error: function (error) {
-                console.error(error);
+                console.log(error);
             }
         });
     }
 
-    function showData(data) {
-        // 将JSON 打印到tbody中
-        function showData(data) {
-            $.each(data, function (index, message) {
+    // 展示Msg
+    function showMsg(msgs) {
+        let $thead = "<th>编号</th>" +
+            "<th>标题</th>" +
+            "<th>教师姓名</th>" +
+            "<th>学生姓名</th>" +
+            "<th>内容</th>" +
+            "<th>是否已经处理</th>" +
+            "<th>处理</th>" +
+            "<th>操作</th>";
 
-                // 新建一行
-                var row = $('<tr></tr>')
+        let $tbody = $('<tbody></tbody>');
 
-                /**
-                 * 对数据和这一行的样式进行处理
-                 *
-                 * 
-                */
+        $.each(msgs, function (index, value) {
+            console.log(value);
+            let tr = $('<tr></tr>');
+            tr.append('<td>' + value.id + '</td>');
+            tr.append('<td>' + value.title + '</td>');
+            tr.append('<td>' + value.teacherName + '</td>');
+            tr.append('<td>' + value.studentName + '</td>');
+            tr.append('<td>' + value.msg + '</td>');
+            tr.append('<td>' + (value.solved == 1 ? '已处理' : '未处理') + '</td>');
+            // 处理按钮
+            if (!value.status) {
+                tr.append('<td><button class="btn btn-primary" onclick="processMsg(' + value.id + ')">处理</button></td>');
+            } else {
+                tr.append('<td></td>');
+            }
+            // 删除按钮
+            tr.append('<td><button class="btn btn-danger" onclick="deleteMsg(' + value.id + ')">删除</button></td>');
 
-                var tds = '<td>' + message.id + '</td>' +
-                    '<td>' + message.title + '</td>' +
-                    '<td>' + message.teacherName + '</td>' +
-                    '<td>' + message.studentName + '</td>' +
-                    '<td>' + message.msg + '</td>' +
-                    '<td>' + (message.solved == 0 ? '未处理' : '已处理') + '</td>' +
-                    '<td><button class="btn btn-primary process-btn" id="solvedMsg">处理</button></td>' +
-                    '<td><button class="btn btn-danger delete-btn" id="deleteMsg">删除</button></td>' +
-                    '</tr>';
+            $tbody.append(tr);
+        });
+        // 清空show中的元素
+        createTable($show, $thead, $tbody);
+    }
 
-                // 对tr添加样式:
-                // 如果没有对这个信息进行处理,则这个tr的样式应为为 warning
-                if (message.solved == 0) {
-                    row.addClass('warning');
-                }
 
-                // 将处理信息放置到tr中
-                row.html(tds);
+    // 删除Msg
+    function deleteMsg(id) {
+        console.log(id);
+        $.ajax({
+            type: "GET",
+            url: "deleteMsg",
+            data: {
+                'id': id
+            },
+            dataType: "JSON",
+            success: function (msgs) {
+                getMsg();
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
 
-                // 将这一行添加到tbody中
-                tbody.append(row);
-            });
-        }
+
+    }
+
+
+
+
+</script>
+
+<!--
+    教师信息展示
+
+-->
+<script>
+
+    /* 对id=teacher的标签添加一个事件绑定 */
+    var $teacher = $('#teacher');
+    $teacher.click(function () {
+
+        // 清空表格
+        $show.empty();
+
+
+        // 获取和展示teacher
+        getTeachers()
+
+    });
+
+    // 获取teacher的值
+    function getTeachers() {
+        $.ajax({
+            type: "GET",
+            url: "getTeacher",
+            dataType: "JSON",
+            success: function (teachers) {
+                console.log(teachers);
+                showTeacher(teachers);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+    // 展示teacher
+    function showTeacher(teachers) {
+        let $thead = "<th>编号</th>" +
+
+            "<th>姓名</th>" +
+            "<th>年龄</th>" +
+            "<th>性别</th>" +
+            "<th>等级</th>" +
+            "<th>是否被删除</th>" +
+            "<th>修改信息</th>" +
+            "<th>操作</th>";
+
+        let $tbody = $('<tbody></tbody>');
+
+        $.each(teachers, function (index, teacher) {
+            console.log(teacher);
+            let tr = $('<tr></tr>');
+            tr.append('<td>' + teacher.id + '</td>');
+            tr.append('<td>' + teacher.name + '</td>');
+            tr.append('<td>' + teacher.age + '</td>');
+            tr.append('<td>' + teacher.sex + '</td>');
+            tr.append('<td>' + teacher.category + '</td>');
+            tr.append('<td>' + (teacher.isdelete == 1 ? '已删除' : '未删除') + '</td>');
+            // 处理按钮
+            if (!teacher.status) {
+                tr.append('<td><button class="btn btn-primary" onclick="updateTeacher(' + teacher.id + ')">修改</button></td>');
+            } else {
+                tr.append('<td></td>');
+            }
+            // 删除按钮
+            tr.append('<td><button class="btn btn-danger" onclick="deleteTeacher(' + teacher.id + ')">删除</button></td>');
+
+            $tbody.append(tr);
+        });
+        // 清空show中的元素
+        createTable($show, $thead, $tbody);
+    }
+    // 删除teacher
+    function deleteTeacher(id) {
+        $.ajax({
+            type: "GET",
+            url: "deleteTeacher",
+            data: {
+                'id': id
+            },
+            dataType: "JSON",
+            success: function () {
+                getTeachers();
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+</script>
+
+<script>
+    /* 对id=student的标签添加一个事件绑定 */
+    var $student = $('#student');
+    $student.click(function () {
+
+        // 清空表格
+        $show.empty();
+
+        // 获取和展示teacher
+        getStudents();
+
+    });
+
+    // 获取学生信息
+    function getStudents() {
+        $.ajax({
+            type: "GET",
+            url: "getStudents",
+            dataType: "JSON",
+            success: function (students) {
+                console.log(students);
+                showStudents(students);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function showStudents(students) {
+        let $thead = 
+            "<th>编号</th>" +
+            "<th>姓名</th>" +
+            "<th>年龄</th>" +
+            "<th>性别</th>" +
+            "<th>培养等级</th>" +
+            "<th>入学时间</th>" +
+            "<th>毕业时间</th>" +
+            "<th>班级</th>" +
+            "<th>是否删除</th>" +
+            "<th>修改信息</th>" +
+            "<th>操作</th>";
+
+        let $tbody = $('<tbody></tbody>');
+
+        $.each(students, function (index, student) {
+            console.log(students);
+            let tr = $('<tr></tr>');
+            tr.append('<td>' + student.id + '</td>');
+            tr.append('<td>' + student.name + '</td>');
+            tr.append('<td>' + student.age + '</td>');
+            tr.append('<td>' + student.sex + '</td>');
+            tr.append('<td>' + student.category + '</td>');
+            tr.append('<td>' + student.enrollmenttime + '</td>');
+            tr.append('<td>' + student.graduationtime + '</td>');
+            tr.append('<td>' + student.course + '</td>');
+            tr.append('<td>' + (student.isdelete == 1 ? '已删除' : '未删除') + '</td>');
+            // 处理按钮
+            if (!student.status) {
+                tr.append('<td><button class="btn btn-primary" onclick="processMsg(' + student.id + ')">处理</button></td>');
+            } else {
+                tr.append('<td></td>');
+            }
+            // 删除按钮
+            tr.append('<td><button class="btn btn-danger" onclick="deleteMsg(' + student.id + ')">删除</button></td>');
+
+            $tbody.append(tr);
+        });
+        // 清空show中的元素
+        createTable($show, $thead, $tbody);
+    }
+
+
+</script>
+
+
+<script>
+
+
+    // 创建表格
+    function createTable($show, $thead, $tbody) {
+        $show.empty();
+
+        // 创建这个表格
+        let $table = $("<table class=\"table table-hover table-bordered\"> </table>");
+
+        // 将thead加入到表格中
+        let thead = $("<thead></thead>");
+
+        thead.append($('<tr></tr>').html($thead));
+
+        $table.append(thead);
+
+        // 将tbody添加到表格中
+        let tbody = $("<tbody></tbody>");
+        tbody.append($thead);
+
+        $table.append($tbody);
+
+        // 将表格放置到show中
+        $show.append($table);
     }
 
 </script>

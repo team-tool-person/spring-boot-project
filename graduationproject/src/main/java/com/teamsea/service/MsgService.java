@@ -16,4 +16,10 @@ public interface MsgService {
      */
     public List<MsgShow> getMsgShows();
 
+    /**
+     * 	删除信息
+     * 
+     * */
+	public Integer deleteMsg(Integer id);
+
 }
