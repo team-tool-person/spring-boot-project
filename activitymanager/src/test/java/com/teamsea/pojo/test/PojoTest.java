@@ -1,7 +1,6 @@
 package com.teamsea.pojo.test;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

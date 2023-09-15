@@ -81,7 +81,7 @@
                 // id 属性
                 var idTd = document.createElement("td");
                 idTd.textContent = activity.id;
-                tr.appendChild(idTd);
+                tr.appendChild(idTd);	
 
                 // title属性
                 var titleTd = document.createElement("td");
@@ -115,11 +115,11 @@
     }
 
     // 打开连接
-    httpRequest.open("GET", "http://127.0.0.1:8080/activity/dofindactivities", true);
+    httpRequest.open("GET", "http://127.0.0.1:8080/activity/dofindactivities", true); 
     // 实现连接
     httpRequest.send();
 
-
+	// 注意AJAX有跨域的问题,在浏览器访问时使用127.0.0.1这个域名进行使用,不要使用localhost来访问
 
 
 </script>
