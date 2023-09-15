@@ -1,6 +1,6 @@
 # Spring Boot 第二个综合项目
 
-## 1. 本项目中使用的特殊AIP和框架
+## 1. 本项目中使用的特殊API和框架
 
 ### 1.1 使用 LocalDateTime 工具类
 
@@ -52,7 +52,7 @@ private LocalDateTime endTime; // 结束时间
 	/**
  * 活动类 使用LomBok插件进行优化
  * 
- * 使用注解@Data生成Getter and Setter ToString
+ * 使用注解@Data生成Getter and Setter toString hashCode equals方法
  * 
  * 使用注解@NoArgsConstructor生成无参构造
  * 
@@ -69,6 +69,11 @@ public class Activity {}
 使用位置:`com.teamsea.servicetest.ServiceUpdateSQLTest`
 
 ```java
+
+/**
+ * 使用注解@Slf4j log4j日志对象 log 引入测试类中
+	
+*/
 @SpringBootTest
 @Slf4j
 public class ServiceUpdateSQLTest {
