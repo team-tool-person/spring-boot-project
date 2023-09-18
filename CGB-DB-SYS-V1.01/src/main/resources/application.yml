@@ -1,0 +1,38 @@
+# server配置
+
+server:
+ port: 8080
+ servlet:
+  context-path: / 
+ tomcat:
+    threads:
+      max: 300
+      min-spare-thread: 50
+      
+# Spring框架 数据库连接池配置 thymeleaf配置
+
+spring:
+ #数据库连接配置
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/jtsys?serverTimezore=UTC&characterEncoding=utf8
+    username: root
+    password: lilium
+  
+  # thymeleaf配置
+  thymeleaf:
+   cache: false
+   prefix: classpath:/templates/pages/
+    
+# mybatis配置
+
+mybatis:
+  mapper-locations:
+  - classpath:/mapper/*/*.xml
+  configuration:
+    default-statement-timeout: 60
+    map-underscore-to-camel-case: true
+    
+# log 配置
+logging:
+  level:
+    com.cy: debug
