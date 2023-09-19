@@ -209,7 +209,7 @@ public class PageController {
 2. 主页开始加载日志管理界面
 3. 日志管理界面呈现数据
 
-##### 服务器端Controller #####
+##### 服务器端代码实现 #####
 
 ```java
 /**
@@ -284,4 +284,56 @@ public String doPageUI() {
 	
    A:	数据加载通常是一个相对比较耗时操作，为了改善用户体验，可以先为用户呈现一个页面，数据加载时，显示数据正在加载中,数据加载完成以后再呈现数据。这样也可满足现阶段不同类型客户端需求(例如手机端,电脑端,电视端,手表端。)
 
-### 4.1.5 日志管理列表数据呈现 ###
+#### 4.1.5 日志管理列表数据呈现 ####
+
+##### 数据架构分析 #####
+
+日志查询服务端数据基本架构
+
+![image28-2023-9-1914:49:29.png](https://gitee.com/teamsea/tuchuang/raw/master/tuchuang/image28-2023-9-1914:49:29.png)
+
+这个模块需要查询很多东西如, 查询数据库中的记录,查询总数,总页数等
+
+我们查询的条目和数据可封装到`pojo`对象中,所查询的数据可以放置到`PageObject`业务层对象中
+
+将查询的信息条目发送到前端页面,有前端进行分析
+
+我们传递到前端的数据要有正确的查询信息,也要有错误的提示信息前端
+
+##### 服务器API架构及业务时序图 #####
+
+AIP架构图
+
+![image12-2023-9-1915:44:14.png](https://gitee.com/teamsea/tuchuang/raw/master/tuchuang/image12-2023-9-1915:44:14.png)
+
++ 浏览器开始访问服务器,进入`DispatherServlet`来访问`Controller`
++  当我们的`Controller`有异常抛出的时候,会抛给`DispatherServlet`来解决
++ `DispatherServlet`会调用`GlobalExceptionHandler`来解决异常
++ 我们可以通过注解`@ControllerAdvice`来定义全局的异常处理类型,来处理`Controller`抛出的异常
+
+时序图
+
+![image5-2023-9-1916:18:10.png](https://gitee.com/teamsea/tuchuang/raw/master/tuchuang/image5-2023-9-1916:18:10.png)
+
+##### 服务端代码实现 #####
+
++ 实体类实现
+
+  ```java
+  public class SysLog implements Serializable {
+  
+  	/**
+  	 * 序列化的id值,这个id值是实体类序列化的唯一表示
+  	 * 
+  	 * 我们可以使用这个id来进行序列化和反序列化
+  	 * 
+  	 */
+  	private static final long serialVersionUID = 1L;
+  	/**
+  	* 和数据库进行一一对应的数据
+  	*/
+  }
+  ```
+
+  
+
