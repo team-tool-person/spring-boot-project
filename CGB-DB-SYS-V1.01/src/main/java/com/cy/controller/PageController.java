@@ -24,4 +24,20 @@ public class PageController {
 		return "starter";
 	}
 	
+	/**
+	 * Log数据展示页面,这个页用来盛放数据的操作
+	 * */
+	@RequestMapping("log/log_list")
+	public String doLogUI() {
+		return "sys/log_list";
+	}
+	
+	/**
+	 * Log查询页面,这个页面用来盛放数据
+	 * */
+	@RequestMapping("doPageUI")
+	public String doPageUI() {
+		return "common/page";
+	}
+	
 }
