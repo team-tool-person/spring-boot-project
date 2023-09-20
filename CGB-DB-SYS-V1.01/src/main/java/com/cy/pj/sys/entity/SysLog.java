@@ -25,12 +25,11 @@ public class SysLog implements Serializable {
 	 * 
 	 * 我们可以使用这个id来进行序列化和反序列化
 	 * 
-	 * 这里是编辑器事前的
+	 * 序列化id最好是应用编译器进行自动生成
 	 */
 	private static final long serialVersionUID = 3594823546108659148L;
 
-
-	private Integer id;
+	private Long id;
 
 	/**
 	 * 用户名
@@ -48,23 +47,23 @@ public class SysLog implements Serializable {
 	private String method;
 
 	/**
-	 * 请求擦参数
-	 * */
+	 * 请求参数
+	 */
 	private String params;
 
 	/**
-	 * 请求参数
-	 * */
+	 * 请求时间ms
+	 */
 	private Long time;
 
 	/**
 	 * 请求Ip地址
-	 * */
+	 */
 	private String ip;
-	
+
 	/**
 	 * 创建时间
-	 * */
+	 */
 	private Date createdTime;
 
 }

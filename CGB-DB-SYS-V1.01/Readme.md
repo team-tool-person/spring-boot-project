@@ -327,13 +327,131 @@ AIP架构图
   	 * 
   	 * 我们可以使用这个id来进行序列化和反序列化
   	 * 
+  	 * 序列化id最好是应用编译器进行自动生成
   	 */
   	private static final long serialVersionUID = 1L;
   	/**
-  	* 和数据库进行一一对应的数据
+  	* 和数据库进行一一对应的属性
   	*/
   }
   ```
-
   
+   关于序列化
+  
+  + 序列化与反序列化功能实现:可以参考这个篇文章
+    [全方位解析Java的序列化 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/235394296)
+  + 在Java中一般有关于存储的类(如String,ArrayList等)都会可实现序列化
+  + 序列化的多应用在对象的保存,对象的网络传输等
+  
+  序列化测试
+  
+  ```java
+  // 确定序列化文件的路径
+  String fileName = "D:\\Java\\spring-boot-project\\CGB-DB-SYS-V1.01\\src\\main\\resources\\serializable\\SysLogObject.out";
+  @Test
+  	public void SerializableTest() throws Exception {
+  		
+  		// 创建一个SysLog对象 并 给予数据
+  		SysLog log = new SysLog();
+  		/**
+  		*	为log对象属性赋值
+  		*/
+  		
+  		// 对这个对象进行序列化
+  		
+  		//设置序列化文件
+  		FileOutputStream fileOutputStream = new FileOutputStream(fileName);
+  		
+  		// 使用ObjectOutStream进行序列化
+  		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+  		objectOutputStream.writeObject(log); // 将对象序列化到制定的文件
+  		
+  		objectOutputStream.close();
+  		System.out.println("序列化完毕");
+  		
+  	}
+  
+  ```
+  
+  反序列化测试
+  
+  ```java
+  @Test
+  	public void deserialization() throws Exception {
+  		
+  		// 获取序列化文件
+  		FileInputStream fileInputStream = new FileInputStream(fileName);
+  		
+  		// 使用Object
+  		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+  		Object object = objectInputStream.readObject();// 将序列化文件转化为对象保存在内存中
+  		
+  		System.out.println(object);
+  		
+  	}
+  ```
+  
+  当我们将序列化id删除后,会出现反序列化出现问题
+
+##### 设计持久层DAO接口 #####
+
+我们在设计时有很多的业务,我们要在持久层中一一实现
+
+这里我将代码分成了几个部分
+
+1. update型SQL
+
+2. select型SQL
+
+   其中select型SQL中要查询的结果有两部分
+
+   1. 查询log条目
+   2. 查询指定的值
+
+将代码使用注释分割线进行分割开了让代码更加整洁和易懂
+
+```java
+package com.cy.pj.sys.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.cy.pj.sys.entity.SysLog;
+
+/**
+ * 日志持久层操作接口
+ * 
+ */
+@Mapper
+public interface SysLogDao {
+
+	/*
+	 * ***********************按条件统计记录总数*******************************************
+	 */
+
+	/**
+	 * 查询指定用户日志条总数
+	 * 
+	 * 这里的查询条件为模糊查询
+	 * 
+	 * @param username 指定用户名
+	 * 
+	 */
+	int getRowCount(String username);
+
+	/*
+	 * ***********************按条件查询Log条目********************************************
+	 */
+	/**
+	 * 查询指定用户的日志
+	 * 
+	 * @param username   指定的用户名
+	 * @param startIndex 起始索引位置
+	 * @param pageSize   一页要显示的行数
+	 * 
+	 */
+	List<SysLog> findPageObject(String username, long startIndex, int pageSize);
+}
+```
 

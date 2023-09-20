@@ -1,0 +1,43 @@
+package com.cy.pj.sys.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.cy.pj.sys.entity.SysLog;
+
+/**
+ * 日志持久层操作接口
+ * 
+ */
+@Mapper
+public interface SysLogDao {
+
+	/*
+	 * ***********************按条件统计记录总数*******************************************
+	 */
+
+	/**
+	 * 查询指定用户日志条总数
+	 * 
+	 * 这里的查询条件为模糊查询
+	 * 
+	 * @param username 指定用户名
+	 * 
+	 */
+	int getRowCount(String username);
+
+	/*
+	 * ***********************按条件查询Log条目********************************************
+	 */
+	/**
+	 * 查询指定用户的日志
+	 * 
+	 * @param username   指定的用户名
+	 * @param startIndex 起始索引位置
+	 * @param pageSize   一页要显示的行数
+	 * 
+	 */
+	List<SysLog> findPageObject(String username, long startIndex, int pageSize);
+
+}
