@@ -1,19 +1,27 @@
 package com.cy.pj.sys.service;
 
+import com.cy.pj.common.vo.PageObject;
+import com.cy.pj.sys.entity.SysLog;
+
 /**
- * 	日志页面操作接口
+ * 日志页面操作接口
  * 
- *  本接口提供对日志的操作
- *  
- *  
- * */
+ * 本接口提供对日志的操作
+ * 
+ * 
+ */
 public interface SysLogService {
 	
-	/**
-	 * 查询
-	 * 
-	 * */
 	
+	/**
+	 * 指定用户的某一页信息
+	 * 
+	 * @param username 用户名
+	 * @param pageCurrent 页码
+	 * @return 当前页记录,分页信息
+	 */
+	PageObject<SysLog> finPageObject(String username, Long pageCurrent);
+  
 	
 	
 }

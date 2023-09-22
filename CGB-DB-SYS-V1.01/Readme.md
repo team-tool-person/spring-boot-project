@@ -1,5 +1,3 @@
-# 第三阶段前部分内容整合 #
-
 # 环境整合与配置 #
 
 ## 1. 创建数据库和数据表 ##
@@ -315,9 +313,9 @@ AIP架构图
 
 ![image5-2023-9-1916:18:10.png](https://gitee.com/teamsea/tuchuang/raw/master/tuchuang/image5-2023-9-1916:18:10.png)
 
-##### 服务端代码实现 #####
+### 4.1.6 服务端代码实现 ###
 
-+ 实体类实现
+#### 实体类实现 ####
 
   ```java
   public class SysLog implements Serializable {
@@ -335,16 +333,16 @@ AIP架构图
   	*/
   }
   ```
-  
+
    关于序列化
-  
+
   + 序列化与反序列化功能实现:可以参考这个篇文章
     [全方位解析Java的序列化 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/235394296)
   + 在Java中一般有关于存储的类(如String,ArrayList等)都会可实现序列化
   + 序列化的多应用在对象的保存,对象的网络传输等
-  
+
   序列化测试
-  
+
   ```java
   // 确定序列化文件的路径
   String fileName = "D:\\Java\\spring-boot-project\\CGB-DB-SYS-V1.01\\src\\main\\resources\\serializable\\SysLogObject.out";
@@ -372,9 +370,9 @@ AIP架构图
   	}
   
   ```
-  
+
   反序列化测试
-  
+
   ```java
   @Test
   	public void deserialization() throws Exception {
@@ -390,68 +388,260 @@ AIP架构图
   		
   	}
   ```
+
+当我们将序列化id删除后,会出现反序列化出现问题
+
+#### 设计持久层 ####
+
+  我们在设计时有很多的业务,我们要在持久层中一一实现
+
+  这里我将代码分成了几个部分
+
+  1. update型SQL
+
+  2. select型SQL
+
+     其中select型SQL中要查询的结果有两部分
+
+     1. 查询log条目
+     2. 查询指定的值
+
+  将代码使用注释分割线进行分割开了让代码更加整洁和易懂
+
+  ```java
+  package com.cy.pj.sys.dao;
   
-  当我们将序列化id删除后,会出现反序列化出现问题
+  import java.util.List;
+  
+  import org.apache.ibatis.annotations.Mapper;
+  
+  import com.cy.pj.sys.entity.SysLog;
+  
+  /**
+   * 日志持久层操作接口
+   * 
+   */
+  @Mapper
+  public interface SysLogDao {
+  
+  	/*
+  	 * ***********************按条件统计记录总数*******************************************
+  	 */
+  
+  	/**
+  	 * 查询指定用户日志条总数
+  	 * 
+  	 * 这里的查询条件为模糊查询
+  	 * 
+  	 * @param username 指定用户名
+  	 * 
+  	 */
+  	int getRowCount(String username);
+  
+  	/*
+  	 * ***********************按条件查询Log条目********************************************
+  	 */
+  	/**
+  	 * 查询指定用户的日志
+  	 * 
+  	 * @param username   指定的用户名
+  	 * @param startIndex 起始索引位置
+  	 * @param pageSize   一页要显示的行数
+  	 * 
+  	 */
+  	List<SysLog> findPageObject(String username, long startIndex, int pageSize);
+  }
+  ```
 
-##### 设计持久层DAO接口 #####
+#### Mapper文件设计与实现 ####
 
-我们在设计时有很多的业务,我们要在持久层中一一实现
+mapper文件的位置在`src/main/resource/mapper/sys`文件夹中
 
-这里我将代码分成了几个部分
+在配置时配置了
 
-1. update型SQL
+```yml
+mapper-locations:
+  - classpath:/mapper/*/*.xml
+```
 
-2. select型SQL
+如果我们直接将mapper文件放置到mapper文件夹中会出现异常
 
-   其中select型SQL中要查询的结果有两部分
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-   1. 查询log条目
-   2. 查询指定的值
 
-将代码使用注释分割线进行分割开了让代码更加整洁和易懂
+<mapper namespace="com.cy.pj.sys.dao.SysLogDao">
+
+
+	<!-- 
+		查询指定用户名日志总数
+		用户名为模糊查询
+		当用户名为空是,查询所有数据
+	-->
+	<select id="getRowCount" resultType="int"> 
+		select count(*) from sys_logs 
+		<where>
+			<if test="username!=null and username!=''">
+				username like concat("%",#{username},"%")
+			</if>
+		</where>
+	</select>
+	
+	<!-- 
+		查询指定用户的操作日志
+	-->
+	<select id="findPageObject" resultType="com.cy.pj.sys.entity.SysLog">
+		
+		SELECT id, username, operation, `method`, params, `time`, ip, createdTime 
+		FROM sys_logs
+		<where>
+			<if test="username!=null and username!=''">
+				username like concat("%",#{username},"%")
+			</if>
+		</where>
+		limit #{startIndex},#{pageSize}
+	</select>
+	
+	
+</mapper>
+```
+
+#### 测试持久层是否可用 ####
 
 ```java
-package com.cy.pj.sys.dao;
-
-import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
-
-import com.cy.pj.sys.entity.SysLog;
-
+/***
+ * 获取总行数测试
+ */
+@Test
+public void getRowTest() {
+	// 获取全部的列数
+    int row = logDao.getRowCount("");
+	log.info(row);
+    
+    // 根据条件查询指定的列数
+	row = logDao.getRowCount("l");
+	log.info(row);
+}
 /**
- * 日志持久层操作接口
+ * 获取指定用户的日志信息
  * 
  */
-@Mapper
-public interface SysLogDao {
+@Test
+public void findPageObject() {
+    // 获取全部的记录
+	List<SysLog> logs = logDao.findPageObject("", 1, 100);
 
-	/*
-	 * ***********************按条件统计记录总数*******************************************
-	 */
+	for (Iterator iterator = logs.iterator(); iterator.hasNext();) {
+		SysLog sysLog = (SysLog) iterator.next();
+		log.info(sysLog);
+	}
+    
+    // 根据条件查询指定目录
+	log.info(logDao.findPageObject("xiao", 0, 10));
 
-	/**
-	 * 查询指定用户日志条总数
-	 * 
-	 * 这里的查询条件为模糊查询
-	 * 
-	 * @param username 指定用户名
-	 * 
-	 */
-	int getRowCount(String username);
-
-	/*
-	 * ***********************按条件查询Log条目********************************************
-	 */
-	/**
-	 * 查询指定用户的日志
-	 * 
-	 * @param username   指定的用户名
-	 * @param startIndex 起始索引位置
-	 * @param pageSize   一页要显示的行数
-	 * 
-	 */
-	List<SysLog> findPageObject(String username, long startIndex, int pageSize);
 }
 ```
+
+#### 业务层设计 ####
+
+由于我们传递的数据不仅仅包括查询到的记录,还包括页数,总页数,等数据
+
+所以我们需要定义一个业务值对象`vo(Value Object)`
+
+#### 定义vo对象 ####
+
+```java
+public class PageObject<T> implements Serializable {
+
+	/**
+	 * 序列化ID
+	 */
+	private static final long serialVersionUID = 1536631092048817285L;
+
+	/**
+	 * 当前页码数,默认值为1
+	 */
+	private Integer pageCurrent = 1;
+
+	/**
+	 * 页面展示数据数,默认值为3
+	 */
+	private Integer pageSize = 3;
+
+	/**
+	 * 总数据数
+	 */
+	private Integer rowCount = 0;
+
+	/**
+	 * 总页数
+	 */
+	private Integer pageCount = 0;
+
+	/**
+	 * 查询的数据
+	 */
+	private List<T> records;
+    
+    public PageObject(Integer pageCurrent, Integer pageSize, Integer rowCount, List<T> records) {
+		super();
+		this.pageCurrent = pageCurrent;
+		this.pageSize = pageSize;
+		this.rowCount = rowCount;
+		this.records = records; 
+        
+		this.pageCount= (rowCount-1)/pageSize+1;
+	}
+}
+```
+
+这个vo类型,可适用于各种查询到的类型,包括log和user等
+
+使用泛型来进行约束
+
+其中总页数,和总页数通过总数据数和展示数来进行计算
+
+#### 业务层设计与实现 ####
+
+业务层接口设计
+
+```java
+public interface SysLogService {	
+	PageObject<SysLog> finPageObject(String username, Long pageCurrent);	
+}
+```
+
+业务层实现类
+
+```java
+@Service
+public class SysLogServiceImpl implements SysLogService {
+    /**
+ 	* 页面最多显示10行数据
+ 	*/
+	private static final Integer pageSize = 10;
+
+	/**
+	* 这个方法分为四部分
+ 	* 1. 校验参数
+ 	* 2. 查询总数,校验参数
+ 	* 3. 查询记录
+ 	* 4. 封装数据
+ 	*/
+    public PageObject<SysLog> finPageObject(String username, Long pageCurrent) {}
+}
+```
+
+这里有一个小问题
+
+```java
+Long rowCount = sysLogDao.getRowCount(username).longValue();
+```
+
+这个地方,MySQL`select count(*)`语句出入的值为int,这里进行类型转换
+
+
+
+
 

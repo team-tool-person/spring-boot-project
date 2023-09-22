@@ -25,7 +25,7 @@ public interface SysLogDao {
 	 * @param username 指定用户名
 	 * 
 	 */
-	int getRowCount(String username);
+	Integer getRowCount(String username);
 
 	/*
 	 * ***********************按条件查询Log条目********************************************
