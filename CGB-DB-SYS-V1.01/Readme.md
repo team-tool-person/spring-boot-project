@@ -1,6 +1,6 @@
 # 环境整合与配置 #
 
-## 1. 创建数据库和数据表 ##
+# 1. 创建数据库和数据表 #
 
 打开MySQL运行窗口
 
@@ -12,9 +12,9 @@ set names uft8;
 source jtsys.sql
 ```
 
-## 2. 配置开发环境
+# 2. 配置开发环境
 
-### 2.1 统一开法环境
+## 2.1 统一开法环境
 
 首先我们需要统一开发环境,设置环境为统一的版本
 
@@ -22,7 +22,7 @@ source jtsys.sql
 + JDK :	1.8
 + MAEN:	3.6.3
 	
-### 2.2 创建项目
+## 2.2 创建项目
 
 1. 项目名称:CGB-DB-SYS-V3.01
 2. 组ID: com.cy
@@ -31,11 +31,11 @@ source jtsys.sql
 ![image4-2023-9-1814:32:55.png](https://gitee.com/teamsea/tuchuang/raw/master/tuchuang/image4-2023-9-1814:32:55.png)
 
 
-### 2.3 添加依赖
+## 2.3 添加依赖
 
 ![image3-2023-9-1814:33:58.png](https://gitee.com/teamsea/tuchuang/raw/master/tuchuang/image3-2023-9-1814:33:58.png)
 
-### 2.4 修改配置文件
+## 2.4 修改配置文件
 
 使用`yml`来进行配置,不再使用`properties`进行配置
 
@@ -82,9 +82,9 @@ logging:
 
 ```
 
-## 3. 初始化首页 ##
+# 3. 初始化首页 #
 
-### 3.1 配置静态资源和页面 ###
+## 3.1 配置静态资源和页面 ##
 
 准备一些初始化资源
 
@@ -92,7 +92,7 @@ logging:
 
 这些内容要放置到`static`目录中
 
-#### 3.1.1 前端页面 ####
+### 3.1.1 前端页面 ###
 
 前端页面的主要来源是来与
 
@@ -106,7 +106,7 @@ AdminLTE 网站使用的Bootstrap框架来实现的
 
 Bootstrap可以来适用于不同的设备,来 
 
-#### 3.2 创建页面Controller ####
+### 3.2 创建页面Controller ###
 
 创建一个页面Controller来检查配置是否有问题
 
@@ -151,9 +151,9 @@ public class PageController {
 
 # 模块设计与开发 #
 
-## 4. 日志管理模块 ##
+# 4. 日志管理模块 #
 
-### 4.1 日志展示模块 ###
+## 4.1 日志展示模块 ##
 
 本模块要实现**记录用户的行为日志**
 
@@ -161,7 +161,7 @@ public class PageController {
 
 对用户的行为进行记录,查询,删除等操作
 
-#### 4.1.1 数据库设计 ####
+### 4.1.1 数据库设计 ###
 
 用户行为记录表`sys_log`
 
@@ -175,7 +175,7 @@ public class PageController {
 | time       | bigint   |                     | 执行时长(ms) |
 | createTime | datetime |                     | 创建时间     |
 
-#### 4.1.2 原型设计 ####
+### 4.1.2 原型设计 ###
 
 基于用户需求，实现静态页面(html/css/js)，通过静态页面为用户呈现基本需求实现
 
@@ -185,9 +185,7 @@ public class PageController {
 
 当我们单击主页面`日志管理`按钮后,页面可以加载出日志管理的界面对日志进行增删改查等操作
 
-
-
-#### 4.1.3 API设计 ####
+### 4.1.3 API设计 ###
 
 对日志业务的流程和API关系进行分析
 
@@ -195,7 +193,7 @@ public class PageController {
 
 经典的三层构造
 
-#### 4.1.4 日志管理列表页面呈现 ####
+### 4.1.4 日志管理列表页面呈现 ###
 
 用户获取日志信息的管理
 
@@ -207,7 +205,7 @@ public class PageController {
 2. 主页开始加载日志管理界面
 3. 日志管理界面呈现数据
 
-##### 服务器端代码实现 #####
+#### 服务器端代码实现 ####
 
 ```java
 /**
@@ -227,7 +225,7 @@ public String doPageUI() {
 }
 ```
 
-##### 前端页面 #####
+#### 前端页面 ####
 
 这个网页有三层套壳,第一层是starter页面
 第二层是doLogUI页面
@@ -268,7 +266,7 @@ public String doPageUI() {
    })
    ```
 
-##### FAQ: #####
+#### FAQ: ####
 
 1. Q:	如直接去访问地址`log/logList`和`doPageUI`会怎样
 
@@ -282,9 +280,9 @@ public String doPageUI() {
 	
    A:	数据加载通常是一个相对比较耗时操作，为了改善用户体验，可以先为用户呈现一个页面，数据加载时，显示数据正在加载中,数据加载完成以后再呈现数据。这样也可满足现阶段不同类型客户端需求(例如手机端,电脑端,电视端,手表端。)
 
-#### 4.1.5 日志管理列表数据呈现 ####
+### 4.1.5 日志管理列表数据呈现 ###
 
-##### 数据架构分析 #####
+#### 数据架构分析 ####
 
 日志查询服务端数据基本架构
 
@@ -298,9 +296,9 @@ public String doPageUI() {
 
 我们传递到前端的数据要有正确的查询信息,也要有错误的提示信息前端
 
-##### 服务器API架构及业务时序图 #####
+#### 服务器API架构及业务时序图 ####
 
-AIP架构图
+API架构图
 
 ![image12-2023-9-1915:44:14.png](https://gitee.com/teamsea/tuchuang/raw/master/tuchuang/image12-2023-9-1915:44:14.png)
 
@@ -549,7 +547,7 @@ public void findPageObject() {
 
 所以我们需要定义一个业务值对象`vo(Value Object)`
 
-#### 定义vo对象 ####
+##### 定义vo对象 #####
 
 ```java
 public class PageObject<T> implements Serializable {
@@ -641,7 +639,19 @@ Long rowCount = sysLogDao.getRowCount(username).longValue();
 
 这个地方,MySQL`select count(*)`语句出入的值为int,这里进行类型转换
 
+##### 自定义异常 #####
 
+在程序运行过程总,需要抛出很多的异常类型
 
+我们可以自定义一些异常来进行使用
 
+自定义的异常一般要继承`RuntimeException`异常类
+
+```java
+package com.cy.pj.common.exception;
+
+public class ServiceException extends RuntimeException {
+	private static final long serialVersionUID = -5598865415547474216L;
+}
+```
 

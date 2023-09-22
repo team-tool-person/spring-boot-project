@@ -1,4 +1,5 @@
-# 省略掉三个目录
+# 省略掉几个个目录
 /.idea
 /.metadata
 /.vscode
+/.setting
