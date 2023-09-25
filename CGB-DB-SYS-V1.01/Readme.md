@@ -277,8 +277,12 @@ public String doPageUI() {
    A:	因为引入的页面`starter`引入了CSS样式和JQ,所以这两个不完整页面可以使用样式和JQ
 
 3. Q:	这样设计开发的好处是什么
-	
+
    A:	数据加载通常是一个相对比较耗时操作，为了改善用户体验，可以先为用户呈现一个页面，数据加载时，显示数据正在加载中,数据加载完成以后再呈现数据。这样也可满足现阶段不同类型客户端需求(例如手机端,电脑端,电视端,手表端。)
+
+4. Q:	`common`是要用来干什么用的
+
+   A:	这个是一个通用的包,程序的共有的一些工具类型
 
 ### 4.1.5 日志管理列表数据呈现 ###
 
@@ -288,13 +292,25 @@ public String doPageUI() {
 
 ![image28-2023-9-1914:49:29.png](https://gitee.com/teamsea/tuchuang/raw/master/tuchuang/image28-2023-9-1914:49:29.png)
 
-这个模块需要查询很多东西如, 查询数据库中的记录,查询总数,总页数等
+这里我们解释两个地方
 
-我们查询的条目和数据可封装到`pojo`对象中,所查询的数据可以放置到`PageObject`业务层对象中
+1. `PageObject`类
 
-将查询的信息条目发送到前端页面,有前端进行分析
+   这个类封装可在数据库查询到的信息
 
-我们传递到前端的数据要有正确的查询信息,也要有错误的提示信息前端
+   包括总行数,总页数,分页数,查询到的记录等
+
+   实现了分析查询的操作
+
+   在Service业务层中完成封装,传递到Controller控制层
+
+2. `JsonResult`类
+
+   这个类中封装了向前端传递的数据
+
+   包括状态,信息,异常处理,和查询信息等
+
+   实现了向前端传递数据的安全性和准确性
 
 #### 服务器API架构及业务时序图 ####
 
@@ -306,12 +322,20 @@ API架构图
 +  当我们的`Controller`有异常抛出的时候,会抛给`DispatherServlet`来解决
 + `DispatherServlet`会调用`GlobalExceptionHandler`来解决异常
 + 我们可以通过注解`@ControllerAdvice`来定义全局的异常处理类型,来处理`Controller`抛出的异常
++ 在`GlobalExceptionHandler`类中有被`@ExceptionHandler`注解描述的方法就是异常处理方法
++ `@ExceptionHandler`可以提供参数,表示为能处理的异常类型和起子类型异常
 
 时序图
 
 ![image5-2023-9-1916:18:10.png](https://gitee.com/teamsea/tuchuang/raw/master/tuchuang/image5-2023-9-1916:18:10.png)
 
 ### 4.1.6 服务端代码实现 ###
+
+<font color='red'>所有的代码实现,都是根据数据架构分析图来的</font>
+
+<font color='red'>这个图包含了对整个模块的所以业务分析</font>
+
+<font color='red'>理解和分析数据架构图,会代码实现时会非常的清晰</font>
 
 #### 实体类实现 ####
 
@@ -389,7 +413,7 @@ API架构图
 
 当我们将序列化id删除后,会出现反序列化出现问题
 
-#### 设计持久层 ####
+#### 持久层设计与实现 ####
 
   我们在设计时有很多的业务,我们要在持久层中一一实现
 
@@ -451,7 +475,7 @@ API架构图
   }
   ```
 
-#### Mapper文件设计与实现 ####
+##### Mapper文件设计与实现 #####
 
 mapper文件的位置在`src/main/resource/mapper/sys`文件夹中
 
@@ -505,7 +529,7 @@ mapper-locations:
 </mapper>
 ```
 
-#### 测试持久层是否可用 ####
+##### 测试持久层是否可用 #####
 
 ```java
 /***
@@ -541,13 +565,13 @@ public void findPageObject() {
 }
 ```
 
-#### 业务层设计 ####
+#### 业务层设计与实现 ####
 
 由于我们传递的数据不仅仅包括查询到的记录,还包括页数,总页数,等数据
 
 所以我们需要定义一个业务值对象`vo(Value Object)`
 
-##### 定义vo对象 #####
+##### 定义PageObject对象 #####
 
 ```java
 public class PageObject<T> implements Serializable {
@@ -600,7 +624,7 @@ public class PageObject<T> implements Serializable {
 
 其中总页数,和总页数通过总数据数和展示数来进行计算
 
-#### 业务层设计与实现 ####
+##### 业务层实现 #####
 
 业务层接口设计
 
@@ -654,4 +678,107 @@ public class ServiceException extends RuntimeException {
 	private static final long serialVersionUID = -5598865415547474216L;
 }
 ```
+
+#### 控制层设计与实现 ####
+
+控制层对象主要负责请求和响应数据的处理，例如，本模块首先要通过控制层对象处理请求参数，然后通过业务层对象执行业务逻辑，再通过VO对象封装响应结果(主要对业务层数据添加状态信息)，最后将响应结果转换为JSON格式的字符串响应到客户端
+
+##### 定义JsonResult对象 #####
+
+这个类型对数据进行封装,主要对查询的数据进行了格式化
+
+不同的用户和不同的前端可以根据这个标准来进行解析数据
+
+```java
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class JsonResult implements Serializable {
+
+    private static final long serialVersionUID = 2080943344863436345L;
+
+    /**
+     * 状态码
+     * 1表示SUCCESS
+     * 0表示ERROR
+     */
+    private byte state = 1;
+
+    /**
+     * 传递的信息
+     */
+    private String message = "ok";
+
+    /**
+     * 正确的数据
+     */
+    private Object data;
+
+    /**
+     * 当业务层抛出异常
+     * 获取信息失败
+     */
+    public JsonResult(Throwable t){
+        this.state = 0;
+        this.message = t.getMessage();
+    }
+
+    /**
+     * 获取信息成功
+     * 直接将信息进行写入
+     */
+    public JsonResult(Object data){
+        this.data = data; 
+    }
+}
+```
+
+##### 控制层实现 #####
+
+我们在这里值进行了对正确信息的处理
+
+错误信息的处理放置到了全局异常处理类中
+
+```java
+@RequestMapping("doFindPageObjects")
+@ResponseBody
+public JsonResult findPageObject(String username, Integer pageCurrent) {
+        
+	PageObject<SysLog> data = service.finPageObject(username, pageCurrent.longValue());
+        
+	JsonResult result = new JsonResult(data);
+    
+    return result;
+        
+    }
+}
+```
+
+##### 全局异常处理类 #####
+
+使用注解`@ControllerAdvice`来定义一个全局异常处理类型
+
+这个注解由SpringMVC提供
+
+<font color='red'>这里需要理解服务器API架构图</font>
+
+```java
+@ControllerAdvice
+public class GlobalExceptionHandler {
+	// 可以处理RuntimeException类型及其子类型
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseBody
+    public JsonResult doHandleRuntimeException(RuntimeException exception) {
+
+        // 在控制台上打印输出异常信息
+        exception.printStackTrace();
+
+        // 将结果传递到前端
+        return new JsonResult(exception);
+    }
+
+}
+```
+
+
 
