@@ -65,6 +65,7 @@ public class SerializableTest {
 		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 		Object object = objectInputStream.readObject();// 将序列化文件转化为对象保存在内存中
 		
+		objectInputStream.close();
 		System.out.println(object);
 		
 	}

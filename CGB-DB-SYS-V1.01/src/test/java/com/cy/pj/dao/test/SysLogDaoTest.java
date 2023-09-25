@@ -41,7 +41,7 @@ public class SysLogDaoTest {
 
 		List<SysLog> logs = logDao.findPageObject("", 1, 100);
 
-		for (Iterator iterator = logs.iterator(); iterator.hasNext();) {
+		for (Iterator<SysLog> iterator = logs.iterator(); iterator.hasNext();) {
 			SysLog sysLog = (SysLog) iterator.next();
 			log.info(sysLog);
 		}
