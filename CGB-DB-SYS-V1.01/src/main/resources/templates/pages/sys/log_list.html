@@ -82,6 +82,7 @@
 	   //2.修改tbody中checkbox对象状态
 	   $("#tbodyId input[type='checkbox']").prop("checked",flag);
    }
+ 
    //获取选中的checkbox对象的id
    function doGetCheckedIds(){
 	   //定义js数组
@@ -97,6 +98,7 @@
 	   });
 	   return array;
    }
+ 
    //删除动作实现
    function doDeleteObjects(){
 	   //1.获取选中的checkbox对象value属性的值，并存储到数组。
@@ -125,10 +127,12 @@
 		   }
 	   });  
    }
+  
    //设置删除错误信息
    function doSetErrorMsg(msg){
 	   $("#tbodyId").html("<tr><td colspan='7'>"+msg+"</td></tr>");
    }
+   
    //删除后的刷新操作
    function doRefreshAfterDeleteOK(){
 	   //1.假如当前页码值不是最后一页,页码值不变。
@@ -155,6 +159,7 @@
 	   //2.执行查询操作
 	   doGetObjects();
    }
+   
    //异步加载日志数据
    function doGetObjects(){
 	   $("#checkAll").prop("checked",false);
@@ -177,6 +182,7 @@
 	       doHandleResponseResult(result);//处理响应结果
 	   })
    }
+   
    //处理服务端响应结果
    function doHandleResponseResult(result){//jsonResult
 	   if(result.state==1){
@@ -189,6 +195,7 @@
 		   doSetErrorMsg(result.message);
 	   }
    }
+  
    //将服务器端返回的日志信息呈现在table的tbody位置。
    function doSetTableBodyRows(records){
 	   //1.获得tbody对象，并清空内容
@@ -206,6 +213,7 @@
 		   tBody.append(tr);
 	   }
    }
+   
    function doCreateTds(row){
 	   var tds=
 	    "<td><input type='checkbox' class='cBox' value='"+row.id+"'></td>"+

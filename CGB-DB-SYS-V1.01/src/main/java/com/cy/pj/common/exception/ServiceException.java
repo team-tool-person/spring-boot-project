@@ -89,6 +89,7 @@ public class ServiceException extends RuntimeException {
 	}
 
 	@Override
+	@Deprecated
 	protected void finalize() throws Throwable {
 		// TODO Auto-generated method stub
 		super.finalize();
