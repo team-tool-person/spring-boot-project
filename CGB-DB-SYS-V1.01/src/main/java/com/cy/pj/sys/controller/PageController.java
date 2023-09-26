@@ -25,7 +25,7 @@ public class PageController {
 	}
 	
 	/**
-	 * Log数据展示页面,这个页用来盛放数据的操作
+	 *  Log数据展示页面,用来展示数据信息和对数据的操作
 	 * */
 	@RequestMapping("log/log_list")
 	public String doLogUI() {
@@ -33,7 +33,7 @@ public class PageController {
 	}
 	
 	/**
-	 * Log查询页面,这个页面用来盛放数据
+	 * 分页菜单,用来实现分页操作
 	 * */
 	@RequestMapping("doPageUI")
 	public String doPageUI() {

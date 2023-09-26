@@ -209,7 +209,7 @@ public class PageController {
 
 ```java
 /**
- * Log数据展示页面,这个页用来盛放数据的操作
+ * Log数据展示页面,用来展示数据信息和对数据的操作
  * */
 @RequestMapping("log/log_list")
 public String doLogUI() {
@@ -217,7 +217,7 @@ public String doLogUI() {
 }
 
 /**
- * Log查询页面,这个页面用来盛放数据
+ * 分页菜单,用来实现分页操作
  * */
 @RequestMapping("doPageUI")
 public String doPageUI() {
@@ -233,7 +233,7 @@ public String doPageUI() {
 
 1. 先加载加载页面`doLogIU`将这个页面放置到`starter`上
 
-   使用JQuery中`load()`函数
+   使用JQuery中`load()`函数,**载入远程 HTML 文件代码并插入至 DOM 中。**
 
    在`starter`中
 
@@ -779,6 +779,86 @@ public class GlobalExceptionHandler {
 
 }
 ```
+
+#### 前端接收和处理数据 ####
+
+加载`dopageUI`页面,加载数据
+
+```js
+$(function(){
+   //在log_list.html页面的pageId位置，加载page.html,合二为一。
+   $("#pageId").load("doPageUI",function(){//资源加载完成执行
+	   doGetObjects();//异步加载日志信息
+   })
+   // 上述代码可以进行简化
+   $("#pageId").load("doPageUI",doGetObjects)
+   //这里的回调函数参数不可以加'()'否则会立刻执行
+})
+```
+
+##### load()函数 #####
+
+> 载入远程 HTML 文件代码并插入至 DOM 中。
+>
+> 默认使用 GET 方式 - 传递附加参数时自动转换为 POST 方式。jQuery 1.2 中，可以指定选择符，来筛选载入的 HTML 文档，DOM 中将仅插入筛选出的 HTML 代码。语法形如 "url #some > selector"。请查看示例。
+
+| 参数     | 解释                     |
+| -------- | ------------------------ |
+| url      | 远程HTML地址             |
+| data     | 向远程地址传递的参数     |
+| callback | 加载完毕后执行的回调函数 |
+
+##### 获取值 #####
+
+当我们加载页面时需要取值
+
+```js
+//执行分页查询
+function doGetObject(){
+    //1. 定义参数
+    var params = {"pageCurrent" : 1}
+    
+    //2. 定义请求地址url
+    var url = 'doFindPageObject'
+    
+    //3. 发送异步请求
+    $.getJSON(url,params,function(result){
+        console.log(result);
+ 		// 将数据放置到页面上
+        doHandleResponseResult(result);
+    })
+}
+```
+
+##### 将数据放置到页面上 #####
+
+```js
+function doHandleResponseResult(result){
+    //验证状态信息
+    if(result.state == 1 ){// 获取为正确的数据
+        
+        // 1.更新日志列表信息
+        doSetTableBodyRows(result.data.records)
+        // 2.更分页信息
+        
+    }else{// 获取为正确的数据
+        alert(result.message);
+    }
+}
+
+// 更新tbody日志列表信息
+function doSetTableBodyRows(records){
+    //1. 获取tbody,清空原有内容
+    var tBody=$("#tbodyId");
+    tBody.empty();
+    //2. 迭代records对象并将内容追加到tbody中
+    for(const r of records){
+         
+    }
+}
+```
+
+ 
 
 
 
