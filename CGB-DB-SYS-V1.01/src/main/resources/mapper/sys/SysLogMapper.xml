@@ -18,7 +18,7 @@
 			</if>
 		</where>
 	</select>
-	
+
 	<!-- 
 		查询指定用户的操作日志
 	-->
@@ -36,6 +36,19 @@
 		
 		
 	</select>
-	
-	
+
+	<!-- 根据id值来删除指定的日志 -->
+	<delete id="deleteObject">
+		DELETE FROM sys_logs  
+		<choose>
+			<when test="ids!=null and ids.length>0">
+				<foreach collection="ids" item="id" separator="or">  
+					id=#{id}
+				</foreach>
+			</when>
+			<otherwise>
+         		where 1==2
+			</otherwise>
+		</choose>
+	</delete>
 </mapper>

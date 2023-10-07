@@ -32,11 +32,26 @@ public class SysLogController {
     public JsonResult findPageObject(String username, Long pageCurrent) {
 
         PageObject<SysLog> data = service.finPageObject(username, pageCurrent);
-        
+
         JsonResult result = new JsonResult(data);
-    
+
         return result;
-        
+
     }
 
+    /***
+     * 删除指定条目
+     * 
+     * @param ids 条目id号码
+     * @return JSON数据类型
+     */ 
+    @RequestMapping("doDeleteObjects")
+    @ResponseBody
+    public JsonResult doDeleteObjects(Integer... ids) {
+
+        service.deleteObject(ids);
+
+        return new JsonResult("delete ok");
+
+    }
 }

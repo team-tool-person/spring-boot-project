@@ -23,5 +23,15 @@ public interface SysLogService {
 	PageObject<SysLog> finPageObject(String username, Long pageCurrent);
   
 	
+	/**
+     * 删除指定条目
+     * 
+     * @param ids 条目id号码
+     * @return 影响的行数
+	 */
+	Integer deleteObject(Integer...ids);
+	
+
+	
 	
 }

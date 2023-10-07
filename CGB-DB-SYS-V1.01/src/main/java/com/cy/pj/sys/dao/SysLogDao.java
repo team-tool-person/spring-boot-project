@@ -49,5 +49,5 @@ public interface SysLogDao {
      * @param id号码,允许多数据进行删除
 	 * 
      */
-	Integer deleteObject(int...ids);
+	Integer deleteObject(Integer...ids);
 }
