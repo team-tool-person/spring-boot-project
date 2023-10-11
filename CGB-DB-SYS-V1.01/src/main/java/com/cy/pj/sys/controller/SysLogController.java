@@ -11,7 +11,7 @@ import com.cy.pj.sys.entity.SysLog;
 import com.cy.pj.sys.service.SysLogService;
 
 /***
- * 日志系统控制层
+ * 日志系统控制层 
  */
 @Controller
 @RequestMapping("/log/")
