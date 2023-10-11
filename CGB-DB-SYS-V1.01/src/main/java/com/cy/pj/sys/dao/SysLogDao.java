@@ -46,8 +46,16 @@ public interface SysLogDao {
 	/**
      * 删除指定条目
      * 
-     * @param id号码,允许多数据进行删除
+	 * 
+     * @param ids id号码,允许多数据进行删除
 	 * 
      */
 	Integer deleteObject(Integer...ids);
+
+	/**
+	 * 增加用户操作日志
+	 * 
+	 * @param entitiy 日志信息
+	 */
+	Integer insertObject(SysLog entity);
 }

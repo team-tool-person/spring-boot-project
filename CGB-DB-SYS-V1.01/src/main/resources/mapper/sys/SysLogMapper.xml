@@ -42,8 +42,7 @@
 		DELETE FROM sys_logs  
 		<choose>
 			<when test="ids!=null and ids.length>0">
-				<foreach collection="ids" item="id" separator="or">  
-					id=#{id}
+				<foreach collection="ids" item="id" separator="or">   id=#{id}
 				</foreach>
 			</when>
 			<otherwise>
@@ -51,4 +50,11 @@
 			</otherwise>
 		</choose>
 	</delete>
+	<!-- insertObject -->
+	<insert id="insertObject">
+	insert into sys_logs
+	(username,operation,method,params,time,ip,createdTime)
+    values
+	(#{username},#{operation},#{method},#{params},#{time},#{ip},#{createdTime})
+	</insert>
 </mapper>

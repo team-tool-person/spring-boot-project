@@ -89,33 +89,33 @@ public class SysLogServiceImpl implements SysLogService {
 	}
 
 	/**
-     * 删除指定条目
-     * 
-     * @param ids 条目id号码
-     * @return 影响的行数
+	 * 删除指定条目
+	 * 
+	 * @param ids 条目id号码
+	 * @return 影响的行数
 	 */
 	@Override
 	public Integer deleteObject(Integer... ids) {
 		int row = 0;
 
 		if (ids == null || ids.length == 0) {
-            throw new IllegalArgumentException("id值为空");
-        }
+			throw new IllegalArgumentException("id值为空");
+		}
 
 		// 处理有可能出现的SQL异常
 		try {
 			row = sysLogDao.deleteObject(ids);
 		} catch (Exception e) {
 			e.printStackTrace();
+			//TODO 需要联系运维人员
 			throw new RuntimeException(e);
 		}
 
 		if (row <= 0) {
-			throw new NoSuchElementException("没有找到指定值");
+			throw new NoSuchElementException("记录已经不存在");
 		}
 
 		return row;
 	}
-
-	
+   
 }
