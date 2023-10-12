@@ -3,6 +3,7 @@ package com.cy.pj.sys.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cy.pj.sys.dao.MenusDao;
@@ -11,6 +12,7 @@ import com.cy.pj.sys.service.MenusService;
 @Service
 public class MenusServiceImpl implements MenusService{
 
+    @Autowired
     private MenusDao menusDao;
 
     @Override

@@ -8,7 +8,7 @@ public interface MenusService {
     /**
      * 查询所有菜单信息
      * 
-     * @return
+     * @return 使用Map封装数据对象的集合
      */
     List<Map<String,Object>> findObjects ();
 }

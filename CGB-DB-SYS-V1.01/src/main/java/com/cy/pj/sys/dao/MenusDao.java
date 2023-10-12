@@ -13,7 +13,7 @@ public interface MenusDao {
      * 
      * 查询到的菜单信息包括菜单所有信息还有父菜单名称
      * 
-     * @return
+     * @return 使用Map封装的菜单数据
      */
     List<Map<String,Object>> findObjects();
 
