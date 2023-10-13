@@ -51,7 +51,7 @@
         setExpandColumn: function (expandColumn) {
             this.expandColumn = expandColumn;
         },
-        /**
+        /** 
          * 设置记录返回的id值
          */
         setIdField: function (id) {
