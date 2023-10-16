@@ -1,5 +1,6 @@
 (function($) {
     "use strict";
+    // $.fn = $.prototype
     $.fn.bootstrapTreeTable = function(options, param) {
         // 如果是调用方法
         if (typeof options == 'string') {
@@ -133,12 +134,16 @@
                 success : function(result, textStatus, jqXHR) {
                     // 加载完数据先清空
                     tbody.html("");
+                    // 框架中使用的是`data`,所以在控制层中返还的数据要给好一致变量名
                     var data = result.data;
+                    // 当没有数据时进行判断
                     if(!data||data.length<=0){
                         var _empty = '<tr><td colspan="'+options.columns.length+'"><div style="display: block;text-align: center;">没有记录</div></td></tr>'
                         tbody.html(_empty);
                         return;
                     }
+                    
+                    // 有数据进行
                     var rootNode = target.getRootNodes(data);
                     $.each(rootNode, function(i, item) {
                         var tr = $('<tr></tr>');

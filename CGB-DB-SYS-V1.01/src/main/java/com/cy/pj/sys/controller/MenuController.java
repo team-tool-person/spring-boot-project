@@ -15,7 +15,6 @@ import com.cy.pj.sys.service.MenusService;
 public class MenuController {
 
     @Autowired
-
     private MenusService service;
 
     @RequestMapping("doFindObjects")
@@ -25,6 +24,12 @@ public class MenuController {
 
         return new JsonResult(maps);
 
+    }
+
+    @RequestMapping("doDeleteObject")
+    public JsonResult deleteObject(Integer id){
+        service.deleteObject(id);
+        return  new JsonResult("delete ok");
     }
 
 }

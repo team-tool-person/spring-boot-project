@@ -4,17 +4,44 @@
 
 <mapper namespace="com.cy.pj.sys.dao.MenusDao">
 
-    
+
 
     <!-- 
         获取菜单类型
         查询到的菜单信息包括菜单所有信息还有父菜单名称
-     --> 
+     -->
     <select id="findObjects" resultType="Map">
 
         select c.*,p.name parentName from sys_menus c left join sys_menus p on c.parentId=p.id
         
+    </select>
 
+    <!-- 
+        获取子菜单数
+     -->
+
+    <select id="getChildCount">
+
+       select count(*) from sys_menus where parentId = #{id};	 
 
     </select>
+
+
+
+    <!-- 
+        删除指定菜单
+     -->
+    <delete id="deleteObject" parameterType="int">
+        
+        delete from sys_menus 
+        <choose>
+            <when test="menuId != null and menuId > 0">
+                where id = #{id}
+            </when>
+            <otherwise>
+                where 1 = 2
+            </otherwise>
+        </choose>
+
+    </delete>
 </mapper>

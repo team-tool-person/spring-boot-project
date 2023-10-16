@@ -11,4 +11,12 @@ public interface MenusService {
      * @return 使用Map封装数据对象的集合
      */
     List<Map<String,Object>> findObjects ();
+
+    /**
+     * 根据菜单id来进行删除
+     * 
+     * @param id 菜单Id
+     * @return 影响行数
+     */
+    Integer deleteObject(Integer id);
 }
