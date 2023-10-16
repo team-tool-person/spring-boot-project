@@ -1,5 +1,6 @@
 package com.cy.pj.dao.test;
 
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ public class RoleMenuDaoTest {
 
     @Test
     public void findObjectByMenuIdTest() {
-        Map<String, Object> role_menu = dao.findObjectByMenuId(1024);
+        List<Map<String, Object>> role_menu = dao.findObjectByMenuId(1024);
         System.out.println(role_menu);
     }
 

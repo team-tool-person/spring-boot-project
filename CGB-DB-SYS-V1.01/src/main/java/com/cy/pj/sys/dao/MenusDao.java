@@ -15,7 +15,7 @@ public interface MenusDao {
      * 
      * @return 使用Map封装的菜单数据
      */
-    List<Map<String,Object>> findObjects();
+    List<Map<String, Object>> findObjects();
 
     /**
      * 查找该菜单下有无子菜单
@@ -31,7 +31,6 @@ public interface MenusDao {
      * @param menuId 菜单id
      * @return 影响行数
      */
-    Integer deleteObject(Integer menuId);
+    Integer deleteObject(Integer id);
 
-    
 }
