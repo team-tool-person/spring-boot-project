@@ -44,4 +44,11 @@
         </choose>
 
     </delete>
-</mapper>
+
+    <!-- findZtreeMenuNodes --> 
+
+    <select id="findZtreeMenuNodes" resultType="com.cy.pj.common.vo.Node">
+        select id,name,parentId from sys_menus
+    </select>
+    
+    </mapper>

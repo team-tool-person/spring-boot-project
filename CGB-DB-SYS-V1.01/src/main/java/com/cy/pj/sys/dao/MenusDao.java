@@ -5,6 +5,10 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.cy.pj.common.vo.Node;
+
+
+
 @Mapper
 public interface MenusDao {
 
@@ -24,6 +28,13 @@ public interface MenusDao {
      * @return 子菜单数
      */
     Integer getChildCount(Integer id);
+
+    /**
+     * 查询ZTree数节点 
+     * 
+     * @return ZTree节点
+     */
+    List<Node> findZtreeMenuNodes();
 
     /**
      * 删除菜单信息
