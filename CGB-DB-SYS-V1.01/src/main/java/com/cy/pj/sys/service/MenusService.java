@@ -5,6 +5,11 @@ import java.util.Map;
 
 import com.cy.pj.common.vo.Node;
 
+/**
+ * 实现对菜单数据的增删改查
+ * 可以查找到菜单信息和菜单节点树信息 
+ *
+ */
 public interface MenusService {
     
     /**

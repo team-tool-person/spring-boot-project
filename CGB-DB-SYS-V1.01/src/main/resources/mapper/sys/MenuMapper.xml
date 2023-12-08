@@ -50,5 +50,11 @@
     <select id="findZtreeMenuNodes" resultType="com.cy.pj.common.vo.Node">
         select id,name,parentId from sys_menus
     </select>
-    
+
+    <!-- 新增一条菜单数据 --> 
+
+    <insert id="insertObject">
+
+        insert into 
+    </insert>    
     </mapper>

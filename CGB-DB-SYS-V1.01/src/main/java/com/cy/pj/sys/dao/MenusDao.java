@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.cy.pj.common.vo.Node;
+import com.cy.pj.sys.entity.Menu;
 
 
 
@@ -44,4 +45,11 @@ public interface MenusDao {
      */
     Integer deleteObject(Integer id);
 
+    /**
+     * 菜单添加操作
+     * 
+     * @param menu 要添加的新菜单
+     * @return 影响行数
+     */
+    Integer insertObject(Menu menu);
 }
