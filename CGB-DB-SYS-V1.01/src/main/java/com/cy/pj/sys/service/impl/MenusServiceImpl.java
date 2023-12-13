@@ -11,6 +11,7 @@ import com.cy.pj.common.exception.ServiceException;
 import com.cy.pj.common.vo.Node;
 import com.cy.pj.sys.dao.MenusDao;
 import com.cy.pj.sys.dao.RoleMenuDao;
+import com.cy.pj.sys.entity.Menu;
 import com.cy.pj.sys.service.MenusService;
 
 @Service
@@ -98,10 +99,18 @@ public class MenusServiceImpl implements MenusService {
         return rows;
     }
 
+
     /**
      * 添加业务
      * ----------------------------------------------------------------------------
      */
 
 
+    @Override
+    public Integer saveObject(Menu menu) {
+        if (menu == null) {
+            throw new IllegalArgumentException("添加菜单为空值");
+        }
+        return menusDao.insertObject(menu);
+    }
 }

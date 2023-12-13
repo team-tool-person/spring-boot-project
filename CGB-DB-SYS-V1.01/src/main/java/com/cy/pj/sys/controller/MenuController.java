@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cy.pj.common.vo.JsonResult;
 import com.cy.pj.common.vo.Node;
+import com.cy.pj.sys.entity.Menu;
 import com.cy.pj.sys.service.MenusService;
 
 @RestController
@@ -49,6 +50,12 @@ public class MenuController {
     public JsonResult getZtreeMenuNodes(){
         List<Node> nodes = service.findZtreeMenuNodes();
         return new JsonResult(nodes);
+    }
+
+    @RequestMapping("doSaveObject")
+    public JsonResult dosaveObejcResult(Menu menu){
+        service.saveObject(menu);
+        return new JsonResult("save ok");
     }
 
 }

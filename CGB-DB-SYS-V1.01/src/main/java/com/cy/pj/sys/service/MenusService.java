@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.cy.pj.common.vo.Node;
+import com.cy.pj.sys.entity.Menu;
 
 /**
  * 实现对菜单数据的增删改查
@@ -33,4 +34,11 @@ public interface MenusService {
      * @return 影响行数
      */
     Integer deleteObject(Integer id);
+
+    /**
+     * 添加菜单
+     * @param menu 要添加的菜单数据
+     * @return 影响行数
+     */
+    Integer saveObject(Menu menu);
 }
