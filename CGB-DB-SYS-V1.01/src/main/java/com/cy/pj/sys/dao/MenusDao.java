@@ -23,12 +23,27 @@ public interface MenusDao {
     List<Map<String, Object>> findObjects();
 
     /**
+     * 查询的到信息放置到对象中
+     * @return 使用对象来封住数据
+     */
+    List<Menu> getObjects();
+
+    /**
      * 查找该菜单下有无子菜单
      * 
      * @param id 菜单id
      * @return 子菜单数
      */
     Integer getChildCount(Integer id);
+
+    /**
+     * 验证菜单是否存在
+     * @param id 菜单id
+     * @param name 菜单名称
+     * @param parentId 父辈id
+     * @return 存在数
+     */
+    Integer isExist(Integer id,String name,Integer parentId);
 
     /**
      * 查询ZTree数节点 
@@ -52,4 +67,11 @@ public interface MenusDao {
      * @return 影响行数
      */
     Integer insertObject(Menu menu);
+
+    /**
+     * 菜单修改操作
+     * @param menu 要更新的菜单数据
+     * @return 影响行数
+     */
+    Integer updateObject(Menu menu);
 }

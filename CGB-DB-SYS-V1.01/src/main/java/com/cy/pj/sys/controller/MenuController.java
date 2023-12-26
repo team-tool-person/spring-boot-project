@@ -58,4 +58,9 @@ public class MenuController {
         return new JsonResult("save ok");
     }
 
+    @RequestMapping("doUpdateObject")
+    public JsonResult doUpdateObjectResult(Menu menu){
+        service.updateObject(menu);
+        return new JsonResult("update ok");
+    }
 }

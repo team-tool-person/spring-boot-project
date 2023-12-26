@@ -21,6 +21,15 @@ public interface MenusService {
     List<Map<String,Object>> findObjects ();
 
     /**
+     * 验证菜单是否存在
+     * @param id 菜单id
+     * @param name 菜单名称
+     * @param parentId 父id
+     * @return true为存在,fales为不存在
+     */
+    Boolean isExist(Integer id,String name,Integer parentId);
+
+    /**
      * 获取Ztree菜单树节点
      * 
      * @return 菜单树节点
@@ -41,4 +50,11 @@ public interface MenusService {
      * @return 影响行数
      */
     Integer saveObject(Menu menu);
+
+    /**
+     *  修改菜单
+     * @param menu 要修改的菜单数据
+     * @return 影响行数
+     */
+    Integer updateObject(Menu menu);
 }

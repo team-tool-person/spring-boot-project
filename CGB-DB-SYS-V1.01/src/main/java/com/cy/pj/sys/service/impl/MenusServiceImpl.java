@@ -24,7 +24,7 @@ public class MenusServiceImpl implements MenusService {
     private RoleMenuDao roleMenuDao;
 
     /*
-     *  查询业务
+     * 查询业务
      * -----------------------------------------------------------------------------
      */
 
@@ -49,11 +49,26 @@ public class MenusServiceImpl implements MenusService {
      */
     @Override
     public List<Node> findZtreeMenuNodes() {
-       List<Node> nodes = menusDao.findZtreeMenuNodes();
-       return nodes;
+        List<Node> nodes = menusDao.findZtreeMenuNodes();
+        return nodes;
     }
 
-    /* 
+    /**
+     * 验证菜单是否存在
+     * 
+     * @param id       菜单id
+     * @param name     菜单名称
+     * @param parentId 父id
+     * @return true为存在,fales为不存在
+     */
+    @Override
+    public Boolean isExist(Integer id, String name, Integer parentId) {
+        Integer num = menusDao.isExist(id, name, parentId);
+
+        return num > 0;
+    }
+
+    /*
      * 删除业务
      * ----------------------------------------------------------------------------
      */
@@ -99,18 +114,31 @@ public class MenusServiceImpl implements MenusService {
         return rows;
     }
 
-
     /**
      * 添加业务
      * ----------------------------------------------------------------------------
      */
-
 
     @Override
     public Integer saveObject(Menu menu) {
         if (menu == null) {
             throw new IllegalArgumentException("添加菜单为空值");
         }
+
+        if (isExist(menu.getId(), menu.getName(), menu.getParentId()))
+            throw new IllegalArgumentException("菜单已经存在");
+
         return menusDao.insertObject(menu);
+    }
+
+    @Override
+    public Integer updateObject(Menu menu) {
+        if (menu == null)
+            throw new IllegalArgumentException("更改参数为空");
+
+        if (!isExist(menu.getId(), menu.getName(), menu.getParentId()))
+            throw new IllegalArgumentException("菜单不存在");
+
+        return menusDao.updateObject(menu);
     }
 }
