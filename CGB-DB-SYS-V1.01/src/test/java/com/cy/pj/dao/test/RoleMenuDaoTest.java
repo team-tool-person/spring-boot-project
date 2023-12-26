@@ -9,7 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.cy.pj.sys.dao.RoleMenuDao;
 
+import lombok.extern.slf4j.Slf4j;
+
 @SpringBootTest
+@Slf4j
 public class RoleMenuDaoTest {
 
     @Autowired
@@ -28,7 +31,11 @@ public class RoleMenuDaoTest {
 
         row = dao.deleteObjectByMenuId(0);
 
+        log.info(row.toString());
+
         row = dao.deleteObjectByMenuId(1024);
+
+        log.info(row.toString());
 
     }
 
