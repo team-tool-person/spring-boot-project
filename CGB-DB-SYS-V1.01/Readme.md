@@ -58,7 +58,7 @@ Spring综合项目——动吧项目
 │  │  │   │  
 │  │  │   ├─mapper
 │  │  │   │  └─sys
-│  │  │   │          SysLogMapper.xml
+│  │  │   │       
 │  │  │   │      
 │  │  │   ├─serializable
 │  │  │   │      SysLogObject.out
@@ -90,6 +90,9 @@ Spring综合项目——动吧项目
 + JQ函数
   + `load()` `on()` `data()`
 + 在删除时需要使用的SQL语句
++ 使用`@ResponseBody`直接修饰Controller
++ 使用`TreeGrid`
++ 使用`ZTree`
 
 阅读顺序
 
@@ -102,6 +105,6 @@ Spring综合项目——动吧项目
 
 ```
 2023/10/11	日志查询模块,除添加日志外(需要使用AOP的知识)更新完成
-2023/10/11	菜单模块
+2023/10/11	菜单模块 更新完成
 ```
 
