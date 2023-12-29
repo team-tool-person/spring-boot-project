@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.pj.sys.dao.SysRoleDao">
+
+    <!-- 查询操作-->
+
+    <!-- SQL共性操 -->
+    <sql id="queryWhereId">
+        <where>
+            <if test="name != null and name !=''"> name like concat("%",#{name},"%") </if>
+        </where>
+    </sql>
+
+
+    <!-- 
+        getRowCount 
+        查询指定角色名的总数目
+    -->
+    <select id="getRowCount" resultType="int"> select count(*) from sys_roles <include
+            refid="queryWhereId" />
+    </select>
+
+    <!-- 
+        findPageObject 
+        查询指定角色名的数据
+    --> 
+    <select id="findPageObject" resultType="com.cy.pj.sys.entity.SysRole">
+        select id, name, note, createdTime, modifiedTime, createdUser, modifiedUser from sys_roles
+        <include refid="queryWhereId" />
+        order by createdTime desc
+        limit #{startIndex},#{pageSize}
+
+    </select>
+
+</mapper>
