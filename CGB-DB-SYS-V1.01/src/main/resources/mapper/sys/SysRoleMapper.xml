@@ -16,7 +16,7 @@
         getRowCount 
         查询指定角色名的总数目
     -->
-    <select id="getRowCount" resultType="int"> select count(*) from sys_roles <include
+    <select id="getRowCount" resultType="long"> select count(*) from sys_roles <include
             refid="queryWhereId" />
     </select>
 

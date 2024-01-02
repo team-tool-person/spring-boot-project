@@ -20,13 +20,13 @@ public class SysRoleDaoTest {
 
     @Test
     public void getRowCountTest(){
-        Integer rowCount = mapper.getRowCount(null);
+        Long rowCount = mapper.getRowCount(null);
         log.info(rowCount.toString());
     }
 
     @Test
     public void findPageObjectTest(){
-        List<SysRole> roles = mapper.findPageObject(null, 0, 2);
+        List<SysRole> roles = mapper.findPageObject(null, 0l, 2);
         log.info(roles.toString());
     }
 

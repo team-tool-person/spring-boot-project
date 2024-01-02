@@ -21,7 +21,7 @@ public interface SysRoleDao {
 	 * @param name 指定的角色名称
 	 * @return 数据总数目
 	 */
-	Integer getRowCount(String name);
+	Long getRowCount(String name);
 
 	/**
 	 * 查询指定角色名的数据
@@ -29,10 +29,10 @@ public interface SysRoleDao {
 	 * 这里的查询为模糊查询
 	 * 
 	 * @param name 指定的角色名
-	 * @param jump 跳过数目
-	 * @param num  一页的查询总数
+	 * @param startIndex 起始查询位置
+	 * @param pageSize  一页的查询总数
 	 * @return 查询到的数据
 	 */
-	List<SysRole> findPageObject(String name, Integer startIndex, Integer pageSize);
+	List<SysRole> findPageObject(String name, long startIndex, int pageSize);
 
 }

@@ -80,6 +80,7 @@ public class SysLogServiceImpl implements SysLogService {
 
 		// 3. 查询当前页页码记录
 		Long startIndex = (pageCurrent - 1) * pageSize;
+		
 		List<SysLog> sysLogs = sysLogDao.findPageObject(username, startIndex, pageSize);
 
 		// 4. 对查询结果进行封装
