@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
 @Slf4j
-public class SysRoleDaoTest {
+public class RoleDaoTest {
 
     @Autowired
     private RoleDao mapper;
@@ -33,6 +33,9 @@ public class SysRoleDaoTest {
     @Test
     public void deleteObjectTest() {
         Integer row = mapper.deleteObject(48, 49);
+        log.info(row.toString());
+
+        row = mapper.deleteObject();
         log.info(row.toString());
     }
 
