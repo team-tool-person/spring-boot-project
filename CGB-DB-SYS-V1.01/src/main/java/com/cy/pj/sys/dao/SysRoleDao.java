@@ -35,4 +35,12 @@ public interface SysRoleDao {
 	 */
 	List<SysRole> findPageObject(String name, long startIndex, int pageSize);
 
+	/**
+	 * 删除指定的角色
+	 * @param id
+	 * @return 影响的行数
+	 */
+	Integer deleteObject(Integer...ids);
+
+	
 }

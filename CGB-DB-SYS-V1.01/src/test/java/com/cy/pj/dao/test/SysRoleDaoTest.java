@@ -30,4 +30,10 @@ public class SysRoleDaoTest {
         log.info(roles.toString());
     }
 
+    @Test
+    public void deleteObjectTest(){
+        Integer row = mapper.deleteObject(48,49);
+        log.info(row.toString());
+    }
+
 }

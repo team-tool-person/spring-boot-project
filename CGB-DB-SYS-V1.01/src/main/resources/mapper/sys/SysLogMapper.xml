@@ -39,11 +39,12 @@
 
 	<!-- 根据id值来删除指定的日志 -->
 	<delete id="deleteObject">
-		DELETE FROM sys_logs  
+		DELETE FROM sys_logs
 		<choose>
-			<when test="ids!=null and ids.length>0">
+			<when test="ids!=null and ids.length>0"><where>
 				<foreach collection="ids" item="id" separator="or">   id=#{id}
 				</foreach>
+			</where>
 			</when>
 			<otherwise>
          		where 1=2

@@ -20,16 +20,31 @@
             refid="queryWhereId" />
     </select>
 
-    <!-- 
-        findPageObject 
+    <!--
+        findPageObject
         查询指定角色名的数据
-    --> 
-    <select id="findPageObject" resultType="com.cy.pj.sys.entity.SysRole">
-        select id, name, note, createdTime, modifiedTime, createdUser, modifiedUser from sys_roles
-        <include refid="queryWhereId" />
-        order by createdTime desc
-        limit #{startIndex},#{pageSize}
+    -->
+    <select id="findPageObject" resultType="com.cy.pj.sys.entity.SysRole"> select id, name, note,
+        createdTime, modifiedTime, createdUser, modifiedUser from sys_roles <include
+            refid="queryWhereId" /> order by createdTime desc limit #{startIndex},#{pageSize} </select>
 
-    </select>
+    <!-- 
+        deleteObject 
+        删除指定id的角色
+    -->
+    <delete id="deleteObject">
+        delete from sys_roles <choose>
+            <when test="ids!=null and ids.length>0">
+                <where>
+                    <foreach collection="ids" item="id" separator="or">
+                        id=#{id}
+                    </foreach>
+                </where>
+            </when>
+            <otherwise>
+                where 1=2
+            </otherwise>
+        </choose>
 
+    </delete>
 </mapper>
