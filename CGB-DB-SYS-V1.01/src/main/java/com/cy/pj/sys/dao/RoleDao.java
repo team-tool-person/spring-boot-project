@@ -11,7 +11,7 @@ import com.cy.pj.sys.entity.SysRole;
  * 
  */
 @Mapper
-public interface SysRoleDao {
+public interface RoleDao {
 
 	/**
 	 * 查询指定角色名的总数目
