@@ -8,7 +8,7 @@ import com.cy.pj.sys.entity.Menu;
 
 /**
  * 实现对菜单数据的增删改查
- * 可以查找到菜单信息和菜单节点树信息 
+ * 可以查找到菜单信息和菜单节点树信息
  *
  */
 public interface MenusService {

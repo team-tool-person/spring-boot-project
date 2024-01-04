@@ -12,6 +12,7 @@
         </where>
     </sql>
 
+
     <!--
         getRowCount
         查询指定角色名的总数目
@@ -25,7 +26,7 @@
         findPageObject
         查询指定角色名的数据
     -->
-    <select id="findPageObject" resultType="com.cy.pj.sys.entity.SysRole">
+    <select id="findPageObject" resultType="com.cy.pj.sys.entity.Role">
         select id, name, note,createdTime, modifiedTime, createdUser, modifiedUser
         from sys_roles
         <include refid="queryWhereId" />
