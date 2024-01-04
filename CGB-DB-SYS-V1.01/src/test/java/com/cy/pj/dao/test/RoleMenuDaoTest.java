@@ -16,27 +16,39 @@ import lombok.extern.slf4j.Slf4j;
 public class RoleMenuDaoTest {
 
     @Autowired
-    private RoleMenuDao dao;
+    private RoleMenuDao mapper;
 
     @Test
     public void findObjectByMenuIdTest() {
-        List<Map<String, Object>> role_menu = dao.findObjectByMenuId(1024);
+        List<Map<String, Object>> role_menu = mapper.findObjectByMenuId(1024);
         System.out.println(role_menu);
     }
 
     @Test
     public void deleteObjectByMenuIdTest() {
 
-        Integer row = dao.deleteObjectByMenuId(null);
+        Integer row = mapper.deleteObjectByMenuId(null);
 
-        row = dao.deleteObjectByMenuId(0);
-
-        log.info(row.toString());
-
-        row = dao.deleteObjectByMenuId(1024);
+        row = mapper.deleteObjectByMenuId(0);
 
         log.info(row.toString());
 
+        row = mapper.deleteObjectByMenuId(1024);
+
+        log.info(row.toString());
+
+    }
+
+    @Test
+    public void deleteObjectByRoleIdsTest(){
+        
+        Integer row = mapper.deleteObjectByRoleIds(5,7);
+        log.info(row.toString());
+
+
+        Integer[] parms = {5,7};
+        row = mapper.deleteObjectByRoleIds(parms);
+        log.info(row.toString());
     }
 
 }

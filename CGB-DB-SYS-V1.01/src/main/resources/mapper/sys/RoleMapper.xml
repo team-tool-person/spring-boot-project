@@ -28,12 +28,13 @@
         createdTime, modifiedTime, createdUser, modifiedUser from sys_roles <include
             refid="queryWhereId" /> order by createdTime desc limit #{startIndex},#{pageSize} </select>
 
-    <!-- 
-        deleteObject 
+    <!--
+        deleteObject
         删除指定id的角色
     -->
     <delete id="deleteObject">
-        delete from sys_roles <choose>
+        delete from sys_roles
+        <choose>
             <when test="ids!=null and ids.length>0">
                 <where>
                     <foreach collection="ids" item="id" separator="or">

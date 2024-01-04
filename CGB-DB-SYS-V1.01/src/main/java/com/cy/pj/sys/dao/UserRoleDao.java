@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserRoleDao {
 
+    Integer seveObject(Integer roleId,Integer userId);
+
     /**
      * 删除指定角色数据
      * @param ids 角色id
