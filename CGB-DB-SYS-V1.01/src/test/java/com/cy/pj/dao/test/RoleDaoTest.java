@@ -31,12 +31,21 @@ public class RoleDaoTest {
     }
 
     @Test
-    public void deleteObjectTest() {
-        Integer row = mapper.deleteObject(48, 49);
+    public void deleteObjecstTest() {
+        Integer row = mapper.deleteObjects(48, 49);
         log.info(row.toString());
 
-        row = mapper.deleteObject();
+        row = mapper.deleteObjects();
         log.info(row.toString());
+    }
+    
+    @Test
+    public void deleteObjectTest(){
+    	Integer row = mapper.deleteObject(0);
+    	log.info(row.toString());
+    	
+    	row = mapper.deleteObject(2);
+    	log.info(row.toString());
     }
 
 }

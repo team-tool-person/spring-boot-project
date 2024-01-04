@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cy.pj.sys.dao.RoleDao">
 
-    <!-- 查询操作-->
+    <!--
+    ===查询操作================================================================================================= -->
 
     <!-- SQL共性操 -->
     <sql id="queryWhereId">
@@ -11,41 +12,70 @@
         </where>
     </sql>
 
-
-    <!-- 
-        getRowCount 
+    <!--
+        getRowCount
         查询指定角色名的总数目
     -->
-    <select id="getRowCount" resultType="long"> select count(*) from sys_roles <include
-            refid="queryWhereId" />
+    <select id="getRowCount" resultType="long">
+        select count(*) from sys_roles
+        <include refid="queryWhereId" />
     </select>
 
     <!--
         findPageObject
         查询指定角色名的数据
     -->
-    <select id="findPageObject" resultType="com.cy.pj.sys.entity.SysRole"> select id, name, note,
-        createdTime, modifiedTime, createdUser, modifiedUser from sys_roles <include
-            refid="queryWhereId" /> order by createdTime desc limit #{startIndex},#{pageSize} </select>
+    <select id="findPageObject" resultType="com.cy.pj.sys.entity.SysRole">
+        select id, name, note,createdTime, modifiedTime, createdUser, modifiedUser
+        from sys_roles
+        <include refid="queryWhereId" />
+            order by createdTime desc limit #{startIndex},#{pageSize}
+    </select>
+
+    <!--
+    ===删除操作================================================================================================= -->
 
     <!--
         deleteObject
         删除指定id的角色
     -->
-    <delete id="deleteObject">
-        delete from sys_roles
-        <choose>
+    <delete id="deleteObjects"> delete from sys_roles <choose>
             <when test="ids!=null and ids.length>0">
                 <where>
-                    <foreach collection="ids" item="id" separator="or">
-                        id=#{id}
-                    </foreach>
+                    <foreach collection="ids" item="id" separator="or"> id=#{id} </foreach>
                 </where>
             </when>
-            <otherwise>
-                where 1=2
-            </otherwise>
+            <otherwise> where 1=2 </otherwise>
         </choose>
 
     </delete>
+
+    <!--
+        deleteObject
+        删除指定角色
+    -->
+    <delete id="deleteObject"> delete from sys_roles <choose>
+            <when test="id !=null and id>0">
+                <where> id = #{id} </where>
+            </when>
+            <otherwise> where 1 = 2 </otherwise>
+        </choose>
+    </delete>
+
+    <!--
+    ===新增操作================================================================================================= -->
+
+
+    <!--
+        saveObject
+        添加角色信息
+    -->
+
+    <insert id="saveObject"
+        parameterType="com.cy.pj.sys.entity.Role"
+        useGeneratedKeys="true"
+        keyProperty="id"> insert into sys_roles (id,name,note,createdTime,modifiedTime,
+        createdUser,modifiedUser) values (null,#{name},#{note},now(),now(),
+        #{createdUser},#{modifiedUser})
+    </insert>
 </mapper>
