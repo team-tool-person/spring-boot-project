@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.cy.pj.sys.dao.RoleDao;
-import com.cy.pj.sys.entity.SysRole;
+import com.cy.pj.sys.entity.Role;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +26,7 @@ public class RoleDaoTest {
 
     @Test
     public void findPageObjectTest() {
-        List<SysRole> roles = mapper.findPageObject(null, 0l, 2);
+        List<Role> roles = mapper.findPageObject(null, 0l, 2);
         log.info(roles.toString());
     }
 

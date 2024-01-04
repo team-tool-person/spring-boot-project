@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SysRole implements Serializable{
+public class Role implements Serializable{
 
 	/**
 	 * 序列化id 

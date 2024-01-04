@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cy.pj.common.vo.JsonResult;
 import com.cy.pj.common.vo.PageObject;
-import com.cy.pj.sys.entity.SysRole;
+import com.cy.pj.sys.entity.Role;
 import com.cy.pj.sys.service.RoleService;
 
 @RestController
@@ -19,9 +19,15 @@ public class RoleController {
     @RequestMapping("doFindPageObjects")
     public JsonResult doFindPageObjects(String name, Long pageCurrent) {
 
-        PageObject<SysRole> data = roleService.findPageObject(name, pageCurrent);
+        PageObject<Role> data = roleService.findPageObject(name, pageCurrent);
 
         return new JsonResult(data);
+    }
+
+    @RequestMapping("doDeleteObject")
+    public JsonResult doDeleteObject(Integer roleId){
+        roleService.deleteObject(roleId);
+        return new JsonResult("delete ok");
     }
 
 }

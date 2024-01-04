@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.cy.pj.sys.entity.SysRole;
+import com.cy.pj.sys.entity.Role;
 
 /**
  * 角色持久层操作接口
@@ -33,7 +33,7 @@ public interface RoleDao {
 	 * @param pageSize  一页的查询总数
 	 * @return 查询到的数据
 	 */
-	List<SysRole> findPageObject(String name, long startIndex, int pageSize);
+	List<Role> findPageObject(String name, long startIndex, int pageSize);
 
 	/**
 	 * 删除指定的角色

@@ -41,16 +41,17 @@ public interface SysLogDao {
 	List<SysLog> findPageObject(String username, long startIndex, int pageSize);
 
 	/*
-	 * ***********************按条件进行增删改等操作********************************************
+	 * ***********************按条件进行增删改等操作*******************************************
+	 * *
 	 */
 	/**
-     * 删除指定条目
-     * 
+	 * 删除指定条目
 	 * 
-     * @param ids id号码,允许多数据进行删除
 	 * 
-     */
-	Integer deleteObject(Integer...ids);
+	 * @param ids id号码,允许多数据进行删除
+	 * 
+	 */
+	Integer deleteObject(Integer... ids);
 
 	/**
 	 * 增加用户操作日志
