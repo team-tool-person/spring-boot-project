@@ -24,8 +24,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleDao roleDao;
-
-
     
     /**
      * 查询角色页面数据,包括分页数据和角色数据

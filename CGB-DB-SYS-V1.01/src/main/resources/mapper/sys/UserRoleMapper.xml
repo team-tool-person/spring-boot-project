@@ -3,23 +3,34 @@
 
 <mapper namespace="com.cy.pj.sys.dao.UserRoleDao">
 
+	<!-- deleteObjectByRoleId -->
 
-    <!-- deleteObjectByRoleId -->
+	<delete id="deleteObjectByRoleId"> delete from sys_user_roles where <choose>
+			<when test="roleId != null and roleId > 0">
+				role_id = #{roleId}
+			</when>
+			<otherwise>
+				1=2
+			</otherwise>
+		</choose>
+	</delete>
 
-    <delete id="deleteObjectByRoleId">
-        delete from sys_user_roles
-        <choose>
-            <when test="ids!=null and ids.length>0">
-                <where>
-                    <foreach collection="ids" item="id" separator="or">
-                        id=#{id}
-                    </foreach>
-                </where>
-            </when>
-            <otherwise>
-                where 1=2
-            </otherwise>
-        </choose>
 
-    </delete>
+	<!-- deleteObjectByRoleId -->
+
+	<delete id="deleteObjectByRoleIds"> delete from sys_user_roles <choose>
+			<when test="roleIds!=null and roleIds.length>0">
+				<where>
+					<foreach collection="roleIds" item="roleId" separator="or">
+		role_id=#{roleId}
+					</foreach>
+				</where>
+			</when>
+			<otherwise>
+				where 1=2
+			</otherwise>
+		</choose>
+
+	</delete>
+
 </mapper>

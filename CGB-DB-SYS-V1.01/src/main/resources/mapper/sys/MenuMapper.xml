@@ -5,56 +5,64 @@
 <mapper namespace="com.cy.pj.sys.dao.MenusDao">
 
 
-    <!-- 
+	<!-- 
         获取菜单类型
         查询到的菜单信息包括菜单所有信息还有父菜单名称
      -->
-    <select id="findObjects" resultType="Map"> select c.*,p.name parentName from sys_menus c left
-        join sys_menus p on c.parentId=p.id </select>
+	<select id="findObjects" resultType="Map"> select c.*,p.name parentName from
+		sys_menus c left
+		join sys_menus p on c.parentId=p.id </select>
 
-    <!-- 
+	<!-- 
         获取子菜单数
      -->
 
-    <select id="getChildCount"> select count(*) from sys_menus where parentId = #{id}; </select>
+	<select id="getChildCount"> select count(*) from sys_menus where parentId =
+		#{id}; </select>
 
 
-    <!-- 
+	<!-- 
         删除指定菜单
      -->
-    <delete id="deleteObject" parameterType="int"> delete from sys_menus <choose>
-            <when test="menuId != null and menuId > 0"> where id = #{id} </when>
-            <otherwise> where 1 = 2 </otherwise>
-        </choose>
+	<delete id="deleteObject" parameterType="int"> delete from sys_menus <choose>
+			<when test="menuId != null and menuId > 0"> where id = #{id} </when>
+			<otherwise> where 1 = 2 </otherwise>
+		</choose>
 
-    </delete>
+	</delete>
 
-    <!-- findZtreeMenuNodes -->
+	<!-- findZtreeMenuNodes -->
 
-    <select id="findZtreeMenuNodes" resultType="com.cy.pj.common.vo.Node"> select id,name,parentId
-        from sys_menus </select>
+	<select id="findZtreeMenuNodes" resultType="com.cy.pj.common.vo.Node">
+		select id,name,parentId
+		from sys_menus </select>
 
-    <!-- 
+	<!-- 
         新增一条菜单数据 
         在reatedTime,modifiedTime中使用的Mysql中的now函数，添加当前时间
     -->
-    <insert id="insertObject" parameterType="com.cy.pj.sys.entity.Menu"> insert into sys_menus
-        (name,url,type,sort,note,parentId,permission,createdTime,modifiedTime,createdUser,modifiedUser)
-        values
-        (#{name},#{url},#{type},#{sort},#{note},#{parentId},#{permission},now(),now(),#{createdUser},#{modifiedUser})
-        </insert>
+	<insert id="insertObject" parameterType="com.cy.pj.sys.entity.Menu"> insert
+		into sys_menus
+		(name,url,type,sort,note,parentId,permission,createdTime,modifiedTime,createdUser,modifiedUser)
+		values
+		(#{name},#{url},#{type},#{sort},#{note},#{parentId},#{permission},now(),now(),#{createdUser},#{modifiedUser})
+	</insert>
 
-    <!-- 修改一条菜单数据 -->
-    <update id="updateObject" parameterType="com.cy.pj.sys.entity.Menu"> update sys_menus set
-        name=#{name}, type=#{type}, sort=#{sort}, url=#{url}, parentId=#{parentId},
-        permission=#{permission}, modifiedUser=#{modifiedUser}, modifiedTime=now() where id=#{id} </update>
+	<!-- 修改一条菜单数据 -->
+	<update id="updateObject" parameterType="com.cy.pj.sys.entity.Menu"> update
+		sys_menus set
+		name=#{name}, type=#{type}, sort=#{sort}, url=#{url},
+		parentId=#{parentId},
+		permission=#{permission}, modifiedUser=#{modifiedUser},
+		modifiedTime=now() where id=#{id} </update>
 
-    <!-- isExist -->
-    <select id="isExist"> select count(*) from sys_menus where (name=#{name} and
-        parentId=#{parentId} ) or id=#{id} </select>
+	<!-- isExist -->
+	<select id="isExist"> select count(*) from sys_menus where (name=#{name} and
+		parentId=#{parentId} ) or id=#{id} </select>
 
-    <!-- getObjects -->
+	<!-- getObjects -->
 
-    <select id="getObjects" resultType="com.cy.pj.sys.entity.Menu"> select c.*,p.name parentName from sys_menus c left join sys_menus p on
-        c.parentId=p.id </select>
+	<select id="getObjects" resultType="com.cy.pj.sys.entity.Menu"> select
+		c.*,p.name parentName from sys_menus c left join sys_menus p on
+		c.parentId=p.id </select>
 </mapper>

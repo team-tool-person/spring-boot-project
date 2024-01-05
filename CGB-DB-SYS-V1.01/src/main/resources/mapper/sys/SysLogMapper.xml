@@ -10,9 +10,7 @@
 		用户名为模糊查询
 		当用户名为空是,查询所有数据
 	-->
-	<select id="getRowCount" resultType="int"> 
-		select count(*) from sys_logs 
-		<where>
+	<select id="getRowCount" resultType="int"> select count(*) from sys_logs <where>
 			<if test="username!=null and username!=''">
 				username like concat("%",#{username},"%")
 			</if>
@@ -22,40 +20,33 @@
 	<!-- 
 		查询指定用户的操作日志
 	-->
-	<select id="findPageObject" resultType="com.cy.pj.sys.entity.SysLog">
-		
-		SELECT id, username, operation, `method`, params, `time`, ip, createdTime 
-		FROM sys_logs
-		<where>
+	<select id="findPageObject" resultType="com.cy.pj.sys.entity.SysLog"> SELECT
+		id, username, operation, `method`, params, `time`, ip, createdTime FROM
+		sys_logs <where>
 			<if test="username!=null and username!=''">
 				username like concat("%",#{username},"%")
 			</if>
 		</where>
-		limit #{startIndex},#{pageSize}
-
-		
-		
-	</select>
+		limit #{startIndex},#{pageSize} </select>
 
 	<!-- 根据id值来删除指定的日志 -->
-	<delete id="deleteObject">
-		DELETE FROM sys_logs
-		<choose>
-			<when test="ids!=null and ids.length>0"><where>
-				<foreach collection="ids" item="id" separator="or">   id=#{id}
-				</foreach>
-			</where>
+	<delete id="deleteObject"> DELETE FROM sys_logs <choose>
+			<when test="ids!=null and ids.length>0">
+				<where>
+					<foreach collection="ids" item="id" separator="or"> id=#{id}
+					</foreach>
+				</where>
 			</when>
 			<otherwise>
-         		where 1=2
+				where 1=2
 			</otherwise>
 		</choose>
 	</delete>
 	<!-- insertObject -->
 	<insert id="insertObject">
-	insert into sys_logs
-	(username,operation,method,params,time,ip,createdTime)
-    values
-	(#{username},#{operation},#{method},#{params},#{time},#{ip},#{createdTime})
+		insert into sys_logs
+		(username,operation,method,params,time,ip,createdTime)
+		values
+		(#{username},#{operation},#{method},#{params},#{time},#{ip},#{createdTime})
 	</insert>
 </mapper>

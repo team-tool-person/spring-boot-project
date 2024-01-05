@@ -5,13 +5,22 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserRoleDao {
 
-    Integer seveObject(Integer roleId,Integer userId );
+    Integer seveObject(Integer roleId,Integer userId);
 
     /**
-     * 删除指定角色数据
-     * @param ids 角色id
+     * 删除指定角色主表数据,仅删除一个
+     * @param roleId
      * @return 影响的行数
      */
-    Integer deleteObjectByRoleId(Integer...ids);
+    Integer deleteObjectByRoleId(Integer roleId);
+
+    /**
+     * 删除指定角色主表数据,删除多个
+     * @param roleIds 角色id
+     * @return 影响的行数
+     */
+    Integer deleteObjectByRoleIds(Integer...roleIds);
+
+    
 
 }
