@@ -25,6 +25,14 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleDao roleDao;
 
+
+    
+    /**
+     * 查询角色页面数据,包括分页数据和角色数据
+     * @param name 要查询角色的名称,模糊查询,可以为空
+     * @param pageCurrent 当前页面
+     * @return 角色页面数据信息
+     */
     @Override
     public PageObject<Role> findPageObject(String name, Long pageCurrent) {
         
@@ -47,11 +55,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     /**
-     * 根据角色id进行删除
-     *
-     * 首先先验证参数
-     *
-     * 在进行主表数据的删除,在删除从表数据
+     * 根据角色id进行删除,首先先验证参数,在进行主表数据的删除,在删除从表数据
      * @param roleIds 角色Id
      * @return 影响的行数
      */
@@ -67,8 +71,5 @@ public class RoleServiceImpl implements RoleService {
 
         return roleDao.deleteObject(roleId);
     }
-
-
-    
 
 }
