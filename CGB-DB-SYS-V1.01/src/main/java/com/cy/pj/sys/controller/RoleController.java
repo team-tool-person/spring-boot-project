@@ -25,9 +25,12 @@ public class RoleController {
     }
 
     @RequestMapping("doDeleteObject")
-    public JsonResult doDeleteObject(Integer roleId){
-        roleService.deleteObject(roleId);
-        return new JsonResult("delete ok");
+    public JsonResult doDeleteObject(Integer id){
+
+        Integer row =  roleService.deleteObject(id);
+        
+        return new JsonResult("delete ok"+row);
+
     }
 
 }

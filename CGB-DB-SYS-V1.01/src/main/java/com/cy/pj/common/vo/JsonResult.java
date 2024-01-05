@@ -44,6 +44,6 @@ public class JsonResult implements Serializable {
      * 直接将信息进行写入
      */
     public JsonResult(Object data){
-        this.data = data; 
+        this.data = data;
     }
 }
