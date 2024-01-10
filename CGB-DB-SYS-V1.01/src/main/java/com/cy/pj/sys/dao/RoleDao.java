@@ -30,6 +30,14 @@ public interface RoleDao {
 	 * @return 查询到的数据
 	 */
 	List<Role> findPageObject(String name, long startIndex, int pageSize);
+
+	
+	/**
+	 * 通过Name属性来获取id
+	 * @param name
+	 * @return
+	 */
+	Integer getIdByName(String name);
 	
 /*===删除操作======================================================================================*/
 	

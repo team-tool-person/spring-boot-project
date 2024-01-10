@@ -8,8 +8,7 @@
 	<!-- SQL共性操 -->
 	<sql id="queryWhereId">
 		<where>
-			<if test="name != null and name !=''"> name like
-				concat("%",#{name},"%") </if>
+			<if test="name != null and name !=''"> name like concat("%",#{name},"%") </if>
 		</where>
 	</sql>
 
@@ -18,7 +17,8 @@
         getRowCount
         查询指定角色名的总数目
     -->
-	<select id="getRowCount" resultType="long"> select count(*) from sys_roles <include
+	<select
+		id="getRowCount" resultType="long"> select count(*) from sys_roles <include
 			refid="queryWhereId" />
 	</select>
 
@@ -26,11 +26,16 @@
         findPageObject
         查询指定角色名的数据
     -->
-	<select id="findPageObject" resultType="com.cy.pj.sys.entity.Role"> select
-		id, name, note,createdTime, modifiedTime, createdUser, modifiedUser from
-		sys_roles <include refid="queryWhereId" /> order by createdTime desc
-		limit #{startIndex},#{pageSize} </select>
+	<select id="findPageObject"
+		resultType="com.cy.pj.sys.entity.Role"> select id, name, note,createdTime, modifiedTime,
+		createdUser, modifiedUser from sys_roles <include refid="queryWhereId" /> order by
+		createdTime desc limit #{startIndex},#{pageSize} </select>
 
+	<!-- getIdByName -->
+
+	<select id="getIdByName">
+		select id from sys_roles where name = #{name}
+	</select>
 	<!--
 	===删除操作================================================================================================= -->
 
@@ -38,7 +43,8 @@
         deleteObject
         删除指定id的角色
     -->
-	<delete id="deleteObjects"> delete from sys_roles <choose>
+	<delete
+		id="deleteObjects"> delete from sys_roles <choose>
 			<when test="ids!=null and ids.length>0">
 				<where>
 					<foreach collection="ids" item="id" separator="or"> id=#{id} </foreach>
@@ -53,7 +59,8 @@
         deleteObject
         删除指定角色
     -->
-	<delete id="deleteObject"> delete from sys_roles <choose>
+	<delete
+		id="deleteObject"> delete from sys_roles <choose>
 			<when test="id !=null and id>0">
 				<where> id = #{id} </where>
 			</when>
@@ -70,12 +77,13 @@
         添加角色信息
     -->
 
-	<insert id="saveObject"
+	<insert
+		id="saveObject"
 		parameterType="com.cy.pj.sys.entity.Role"
 		useGeneratedKeys="true"
-		keyProperty="id"> insert into sys_roles
-		(id,name,note,createdTime,modifiedTime,
+		keyProperty="id"> insert into sys_roles (id,name,note,createdTime,modifiedTime,
 		createdUser,modifiedUser) values (null,#{name},#{note},now(),now(),
-		#{createdUser},#{modifiedUser})
-	</insert>
+		#{createdUser},#{modifiedUser}) </insert>
+
+
 </mapper>

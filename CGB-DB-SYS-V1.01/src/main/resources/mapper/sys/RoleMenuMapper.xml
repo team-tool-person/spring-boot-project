@@ -4,8 +4,7 @@
 
 <mapper namespace="com.cy.pj.sys.dao.RoleMenuDao">
 	<!-- findObjectByMenuId -->
-	<select id="findObjectByMenuId"> select id,role_id,menu_id from
-		sys_role_menus where
+	<select id="findObjectByMenuId"> select id,role_id,menu_id from sys_role_menus where
 		menu_id=#{menuId} </select>
 
 	<!--
@@ -40,14 +39,20 @@
 	<delete id="deleteObjectByRoleIds"> delete from sys_role_menus <choose>
 			<when test="roleIds != null and roleIds.length > 0">
 				<where>
-					<foreach collection="roleIds" item="roleId" separator="or">
-		role_id = #{roleId}
-					</foreach>
+					<foreach collection="roleIds" item="roleId" separator="or"> role_id = #{roleId} </foreach>
 				</where>
 			</when>
-			<otherwise>
-				where 1=2
-			</otherwise>
+			<otherwise> where 1=2 </otherwise>
 		</choose>
 	</delete>
+
+	<!-- insertObejcts -->
+
+	<insert id="insertObejcts">
+		insert into sys_role_menus(role_id,menu_id)
+		values
+		<foreach collection = "menuIds" item = "menuId" separator="," >
+			(#{roleId},#{menuId})
+		</foreach>
+	</insert>
 </mapper>

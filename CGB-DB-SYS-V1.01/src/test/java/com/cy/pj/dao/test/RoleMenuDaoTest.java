@@ -51,4 +51,17 @@ public class RoleMenuDaoTest {
         log.info(row.toString());
     }
 
+    @Test
+    public void insertObjectTest(){
+        Integer row = 0;
+
+        int roleId = 9527;
+        Integer[] menuId = {999,998,776,255,65535,-2};
+
+        row = mapper.insertObejcts(roleId,menuId);
+        log.info(row.toString());
+
+        row = mapper.deleteObjectByRoleId(roleId);
+        log.info(row.toString());
+    }
 }

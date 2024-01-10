@@ -41,4 +41,12 @@ public interface RoleMenuDao {
      */
     Integer deleteObjectByRoleIds(@Param("roleIds")Integer...roleIds);
 
+    /**
+     * 添加角色菜单关系,在添加菜单后添加角色菜单关系数据
+     * @param roleId 角色Id
+     * @param menuIds 菜单Id,添加的角色所管理的所有菜单Id
+     * @return 影响的行数
+     */
+    Integer insertObejcts(Integer roleId, Integer[] menuIds);
+
 }

@@ -13,6 +13,7 @@ import com.cy.pj.sys.dao.UserRoleDao;
 import com.cy.pj.sys.entity.Role;
 import com.cy.pj.sys.service.RoleService;
 
+import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -85,14 +86,45 @@ public class RoleServiceImpl implements RoleService {
         }
 
         // 对角色表进行删除
-        row =  roleDao.deleteObject(roleId);
+        row = roleDao.deleteObject(roleId);
         log.info(row.toString());
 
         if (row == 0) {
             throw new ServiceException("未能进行删除,可能已被删除");
         }
 
-        return  row;
+        return row;
     }
 
+    @Override
+    public Integer saveObejct(Role role, Integer[] menuIds) {
+        // 验证参数
+        if (role == null) {
+            throw new IllegalArgumentException("保存的角色不能为空");
+        }
+
+        if (StringUtils.isEmpty(role.getName())) {
+            throw new IllegalArgumentException("角色名称不能为空");
+        }
+
+        if (menuIds == null || menuIds.length == 0) {
+            throw new IllegalArgumentException("必须为角色分配权限");
+        }
+
+        // 保存角色信息
+        Integer row = roleDao.saveObject(role);
+        log.info(row.toString());
+
+        // 保存角色菜单关系表
+        Integer id = roleDao.getIdByName(role.getName());
+        row =  roleMenuDao.insertObejcts(id, menuIds);
+        log.info(row.toString());
+        
+        return row;
+    }
+    
+    @Override
+    public Integer getRoleIdByName(String name){
+        return roleDao.getIdByName(name);
+    }
 }

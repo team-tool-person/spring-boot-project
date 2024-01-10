@@ -21,4 +21,19 @@ public interface RoleService {
      */
     Integer deleteObject(Integer roleId);
 
+    /**
+     * 添加角色信息,以及其管理管理的菜单信息
+     * @param role 角色信息
+     * @param menuIds 菜单Id,添加的角色所管理的所有菜单
+     * @return 影响行数
+     */
+    Integer saveObejct(Role role,Integer[] menuIds);
+
+    /**
+     * 根据角色Name属性获取其id值
+     * @param name 角色名称
+     * @return 角色的id
+     */
+    Integer getRoleIdByName(String name);
+
 }
