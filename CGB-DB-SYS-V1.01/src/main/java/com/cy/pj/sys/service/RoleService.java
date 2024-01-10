@@ -5,7 +5,7 @@ import com.cy.pj.sys.entity.Role;
 
 public interface RoleService {
 
-    Integer pageSize = 2;
+    Integer pageSize = 20;
 
     /**
      * 获取到当前页面的角色

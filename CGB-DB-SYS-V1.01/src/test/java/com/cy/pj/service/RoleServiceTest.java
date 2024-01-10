@@ -48,9 +48,11 @@ public class RoleServiceTest {
     @Test
     public void deleteObjectTest() {
 
-        Integer id  =0;
+        Integer id = roleService.getRoleIdByName(role.getName());
+        log.info(id.toString());
 
         Integer row = roleService.deleteObject(id);
         log.info(row.toString());
+
     }
 }

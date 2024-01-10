@@ -33,4 +33,10 @@ public class RoleController {
 
     }
 
+    @RequestMapping("doSaveObject")
+    public JsonResult doSaveObjecResult(Role role,Integer[] menuIds){
+        Integer row = roleService.saveObejct(role, menuIds);
+        return new JsonResult("Insert OK"+row);
+    }
+
 }
