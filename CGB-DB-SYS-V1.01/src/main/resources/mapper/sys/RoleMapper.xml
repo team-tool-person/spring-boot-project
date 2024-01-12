@@ -33,9 +33,22 @@
 
 	<!-- getIdByName -->
 
-	<select id="getIdByName">
-		select id from sys_roles where name = #{name}
+	<select id="getIdByName"> select id from sys_roles where name = #{name} </select>
+
+	<!--
+		findObjectById
+		通过角色的Id来获取角色和其管理所有菜单的数据
+	-->
+	<select id="findObjectById" resultMap="RoleMenuVo">
+		select
 	</select>
+
+	<resultMap id="RoleMenuVo" type="com.cy.pj.common.vo.RoleMenuVo">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="note" column="note"/>
+
+	</resultMap>
 	<!--
 	===删除操作================================================================================================= -->
 
@@ -84,6 +97,4 @@
 		keyProperty="id"> insert into sys_roles (id,name,note,createdTime,modifiedTime,
 		createdUser,modifiedUser) values (null,#{name},#{note},now(),now(),
 		#{createdUser},#{modifiedUser}) </insert>
-
-
 </mapper>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.cy.pj.common.vo.RoleMenuVo;
 import com.cy.pj.sys.entity.Role;
 
 /**
@@ -38,6 +39,13 @@ public interface RoleDao {
 	 * @return
 	 */
 	Integer getIdByName(String name);
+
+	/**
+	 * 通过Id来查询数据,其中包括角色的id,name,note和角色管理的所有的菜单id
+	 * @param id
+	 * @return
+	 */
+	RoleMenuVo findObjectById(Integer id);
 	
 /*===删除操作======================================================================================*/
 	
