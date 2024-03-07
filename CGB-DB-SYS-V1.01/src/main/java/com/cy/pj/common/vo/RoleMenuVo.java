@@ -7,6 +7,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 基于角色id从数据库中获取数据然后封装到此对象
+ * 
+ * 在数据表中，角色和菜单时多对多的关系，这里只修改一个角色的信息
+ */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

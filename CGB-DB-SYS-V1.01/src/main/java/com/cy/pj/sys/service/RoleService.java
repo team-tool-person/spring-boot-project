@@ -1,6 +1,7 @@
 package com.cy.pj.sys.service;
 
 import com.cy.pj.common.vo.PageObject;
+import com.cy.pj.common.vo.RoleMenuVo;
 import com.cy.pj.sys.entity.Role;
 
 public interface RoleService {
@@ -35,5 +36,10 @@ public interface RoleService {
      * @return 角色的id
      */
     Integer getRoleIdByName(String name);
+
+    /**
+     * 根据角色的id来获取VO对象数据，进行展示和修改
+     */
+    RoleMenuVo findObjectById(Integer id);
 
 }

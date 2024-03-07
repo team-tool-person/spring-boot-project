@@ -6,6 +6,8 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.cy.pj.common.vo.RoleMenuVo;
+
 @Mapper
 public interface RoleMenuDao {
 
@@ -49,4 +51,17 @@ public interface RoleMenuDao {
      */
     Integer insertObejcts(Integer roleId, Integer[] menuIds);
 
+    /**
+	 * 通过Id来查询数据,其中包括角色的id,name,note和角色管理的所有的菜单id
+	 * @param 角色id
+	 * @return RoleMenu对象
+	 */
+	RoleMenuVo findObjectById(Integer role_id);
+
+    /**
+	 * 通过角色id来查询指定
+	 * @param 角色id
+	 * @return 这个角色管理的所有菜单
+	 */
+    List<Integer> findMenuIdsByRoleId(Integer role_id);
 }

@@ -35,25 +35,7 @@
 
 	<select id="getIdByName"> select id from sys_roles where name = #{name} </select>
 
-	<!--
-		findObjectById
-		通过角色的Id来获取角色和其管理所有菜单的数据
-	-->
-	<select id="findObjectById" resultMap="RoleMenuVo">
-		select id,name,note from sys_roles where id = #{id}
-	</select>
 
-	<resultMap id="RoleMenuVo" type="com.cy.pj.common.vo.RoleMenuVo">
-		<id property="id" column="id"/>
-		<result property="name" column="name"/>
-		<result property="note" column="note"/>
-		<collection property="menuId" column="menuId" select="getMenuIdsByRoleId" javaType="java.util.ArrayList"></collection>
-
-	</resultMap>
-
-	<select id="getMenuIdsByRoleId">
-		select menu_id from sys_role_menus where role_id = #{id}
-	</select>
 	<!--
 	===删除操作================================================================================================= -->
 

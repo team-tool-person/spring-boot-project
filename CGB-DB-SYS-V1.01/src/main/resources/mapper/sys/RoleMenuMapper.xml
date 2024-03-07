@@ -48,11 +48,26 @@
 
 	<!-- insertObejcts -->
 
-	<insert id="insertObejcts">
-		insert into sys_role_menus(role_id,menu_id)
-		values
-		<foreach collection = "menuIds" item = "menuId" separator="," >
-			(#{roleId},#{menuId})
-		</foreach>
+	<insert id="insertObejcts"> insert into sys_role_menus(role_id,menu_id) values <foreach
+			collection="menuIds" item="menuId" separator=","> (#{roleId},#{menuId}) </foreach>
 	</insert>
+
+
+	<!--
+		findObjectById
+		通过角色的Id来获取角色和其管理所有菜单的数据
+	-->
+	<select id="findObjectById" resultMap="sysRoleMenuVo"> select id,name,note from sys_roles where id
+		= #{role_id} </select>
+
+	<resultMap id="sysRoleMenuVo" type="com.cy.pj.common.vo.RoleMenuVo">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="note" column="note" />
+		<collection property="menuIds" column="id" select="findMenuIdsByRoleId" />
+	</resultMap>
+
+	<select id="findMenuIdsByRoleId">
+		select menu_id from sys_role_menus where role_id=#{role_id}
+	</select>
 </mapper>

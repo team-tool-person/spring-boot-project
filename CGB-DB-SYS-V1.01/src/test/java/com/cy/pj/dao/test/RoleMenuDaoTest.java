@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.cy.pj.common.vo.RoleMenuVo;
 import com.cy.pj.sys.dao.RoleMenuDao;
 
 import lombok.extern.slf4j.Slf4j;
@@ -63,5 +64,21 @@ public class RoleMenuDaoTest {
 
         row = mapper.deleteObjectByRoleId(roleId);
         log.info(row.toString());
+    }
+
+
+    @Test
+    public void findObjectByIdTest(){
+        RoleMenuVo vo = mapper.findObjectById(1);
+        
+        log.info(vo.toString());
+    }
+
+
+    @Test
+    public void findMenuIdsByRoleIdTest(){
+        List<Integer> list = mapper.findMenuIdsByRoleId(1);
+
+        log.info(list.toString());
     }
 }

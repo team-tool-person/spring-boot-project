@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cy.pj.common.exception.ServiceException;
 import com.cy.pj.common.vo.PageObject;
+import com.cy.pj.common.vo.RoleMenuVo;
 import com.cy.pj.sys.dao.RoleDao;
 import com.cy.pj.sys.dao.RoleMenuDao;
 import com.cy.pj.sys.dao.UserRoleDao;
@@ -117,14 +118,40 @@ public class RoleServiceImpl implements RoleService {
 
         // 保存角色菜单关系表
         Integer id = roleDao.getIdByName(role.getName());
-        row =  roleMenuDao.insertObejcts(id, menuIds);
+        row = roleMenuDao.insertObejcts(id, menuIds);
         log.info(row.toString());
-        
+
         return row;
     }
-    
+
     @Override
-    public Integer getRoleIdByName(String name){
+    public Integer getRoleIdByName(String name) {
         return roleDao.getIdByName(name);
+    }
+
+    /**
+     * 根据角色Id信息查询到角色的信息
+     * 
+     * 包括id,name,note和其管理的菜单信息
+     * 
+     * 这个业务有很多中方法来解决,我们这里使用关联查询法
+     * 
+     * @param 角色id
+     * 
+     * @return RoleMenu对象其中包括角色id,name,note属性,还有其管理的
+     */
+    @Override
+    public RoleMenuVo findObjectById(Integer id) {
+
+        // 参数校验
+        if (id == null || id < 1)
+            throw new IllegalArgumentException("无效参数");
+
+
+        
+
+        RoleMenuVo roleMenuVo = roleMenuDao.findObjectById(id);
+
+        return null;
     }
 }
