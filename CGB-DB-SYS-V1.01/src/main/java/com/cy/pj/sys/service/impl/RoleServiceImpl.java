@@ -147,11 +147,12 @@ public class RoleServiceImpl implements RoleService {
         if (id == null || id < 1)
             throw new IllegalArgumentException("无效参数");
 
-
-        
-
         RoleMenuVo roleMenuVo = roleMenuDao.findObjectById(id);
 
-        return null;
+        if (roleMenuVo == null) {
+            throw new ServiceException("此角色已经不存在");
+        }
+
+        return roleMenuVo;
     }
 }

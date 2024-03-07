@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cy.pj.common.vo.JsonResult;
 import com.cy.pj.common.vo.PageObject;
+import com.cy.pj.common.vo.RoleMenuVo;
 import com.cy.pj.sys.entity.Role;
 import com.cy.pj.sys.service.RoleService;
+
 
 @RestController
 @RequestMapping("/role/")
@@ -38,5 +40,13 @@ public class RoleController {
         Integer row = roleService.saveObejct(role, menuIds);
         return new JsonResult("Insert OK"+row);
     }
+
+    @RequestMapping("doFindObjectById")
+    public JsonResult doFindObjectById(Integer id) {
+        RoleMenuVo roleMenuVo =  roleService.findObjectById(id);
+        return new JsonResult(roleMenuVo);
+    }
+    
+
 
 }

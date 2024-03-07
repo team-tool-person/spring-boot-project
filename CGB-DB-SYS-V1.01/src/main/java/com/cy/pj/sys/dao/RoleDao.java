@@ -65,5 +65,13 @@ public interface RoleDao {
 	 * @return 影响的行数
 	 */
 	Integer saveObject(Role role);
-	
+
+/*===修改操作======================================================================================*/
+
+	/**修改角色信息
+	 * @param role 修改角色信息
+	 * @retrun 影响的行数
+	 */
+	Integer updateObject(Role role);
+
 }
