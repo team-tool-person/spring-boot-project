@@ -31,7 +31,6 @@ public interface RoleDao {
 	 */
 	List<Role> findPageObject(String name, long startIndex, int pageSize);
 
-	
 	/**
 	 * 通过Name属性来获取id
 	 * @param name
@@ -65,6 +64,13 @@ public interface RoleDao {
 	 * @return 影响的行数
 	 */
 	Integer saveObject(Role role);
+
+	/**
+	 * 添加角色全信息
+	 * @param role 添加的角色信息
+	 * @return 影响的行数
+	 */
+	Integer insertObject(Role role);
 
 /*===修改操作======================================================================================*/
 

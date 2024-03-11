@@ -113,9 +113,20 @@ public class RoleServiceImpl implements RoleService {
         }
 
         // 保存角色信息
-        Integer row = roleDao.saveObject(role);
-        log.info(row.toString());
+        Integer row = 0;
+        if (role.getId() == null) {
 
+            row = roleDao.saveObject(role);
+            log.info(row.toString());
+
+        }else{
+
+            row = roleDao.insertObject(role);
+            log.info(row.toString());
+            
+        }
+
+        
         // 保存角色菜单关系表
         Integer id = roleDao.getIdByName(role.getName());
         row = roleMenuDao.insertObejcts(id, menuIds);
@@ -155,4 +166,32 @@ public class RoleServiceImpl implements RoleService {
 
         return roleMenuVo;
     }
+
+    @Override
+    public Integer updateObject(Role role, Integer[] menuIds) {
+        // 验证参数
+        if (role == null)
+            throw new IllegalArgumentException("更新的对象不能为空");
+
+        if (role.getId() == null)
+            throw new IllegalArgumentException("id值不能为空");
+
+        if (StringUtils.isEmpty(role.getName()))
+            throw new IllegalArgumentException("角色名不能为空");
+
+        if (menuIds == null || menuIds.length == 0)
+            throw new IllegalArgumentException("必须为角色指定一个权限");
+
+        // 更新数据
+        Integer row = roleDao.updateObject(role);
+
+        if (row == 0)
+            throw new IllegalArgumentException("对象可能已经不存在");
+
+        row += roleMenuDao.deleteObjectByRoleId(role.getId());
+        row += roleMenuDao.insertObejcts(role.getId(), menuIds);
+
+        return row;
+    }
+
 }

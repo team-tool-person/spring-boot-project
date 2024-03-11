@@ -42,4 +42,12 @@ public interface RoleService {
      */
     RoleMenuVo findObjectById(Integer id);
 
+    /**
+     * 修改指定角色的信息和其管理的菜单
+     * @param role 要修改的角色信息
+     * @param menuIds 要修改要管理菜单信息
+     * @return 影响的行数
+     */
+    Integer updateObject(Role role,Integer[] menuIds);
+
 }

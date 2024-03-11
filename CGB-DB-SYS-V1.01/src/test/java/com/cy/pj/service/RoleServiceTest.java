@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.cy.pj.common.vo.RoleMenuVo;
 import com.cy.pj.sys.entity.Role;
 import com.cy.pj.sys.service.RoleService;
 
@@ -55,4 +56,36 @@ public class RoleServiceTest {
         log.info(row.toString());
 
     }
+
+    
+    @Test
+    public void updateObejctTest(){
+        
+        Role role = new Role();
+
+        role.setId(78);
+        role.setName("TeamSea");
+        role.setNote("管理员?");
+
+        Integer[] meunId = {8,25,45,46,47,115,116};
+        roleService.saveObejct(role, meunId);
+
+        RoleMenuVo roleMenuVo = roleService.findObjectById(78);
+        log.info(roleMenuVo.toString());
+
+        
+        role.setName("TeamSeaQC");
+        role.setNote("管理员");
+        meunId[6] = 146;
+
+        Integer row = roleService.updateObject(role, meunId);
+        log.info(row.toString());
+
+        roleMenuVo = roleService.findObjectById(78);
+        log.info(roleMenuVo.toString());
+
+        roleService.deleteObject(78);
+        
+    }
+
 }

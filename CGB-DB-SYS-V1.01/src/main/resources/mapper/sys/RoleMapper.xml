@@ -84,4 +84,19 @@
 		keyProperty="id"> insert into sys_roles (id,name,note,createdTime,modifiedTime,
 		createdUser,modifiedUser) values (null,#{name},#{note},now(),now(),
 		#{createdUser},#{modifiedUser}) </insert>
+
+	<!-- insertObject -->
+
+	<insert id="insertObject"
+		parameterType="com.cy.pj.sys.entity.Role"> insert into sys_roles
+		(id,name,note,createdTime,modifiedTime, createdUser,modifiedUser) values
+		(#{id},#{name},#{note},now(),now(), #{createdUser},#{modifiedUser}) </insert>
+	<!--
+	===新增操作================================================================================================= -->
+
+	<!-- updateObject -->
+	<update id="updateObject"
+		parameterType="com.cy.pj.sys.entity.Role"> update sys_roles set name=#{name}, note=#{note},
+		modifiedUser=#{modifiedUser}, modifiedTime=now() where id=#{id} </update>
+
 </mapper>
