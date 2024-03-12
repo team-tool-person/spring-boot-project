@@ -10,7 +10,6 @@ import com.cy.pj.common.vo.RoleMenuVo;
 import com.cy.pj.sys.entity.Role;
 import com.cy.pj.sys.service.RoleService;
 
-
 @RestController
 @RequestMapping("/role/")
 public class RoleController {
@@ -27,26 +26,33 @@ public class RoleController {
     }
 
     @RequestMapping("doDeleteObject")
-    public JsonResult doDeleteObject(Integer id){
+    public JsonResult doDeleteObject(Integer id) {
 
-        Integer row =  roleService.deleteObject(id);
-        
-        return new JsonResult("delete ok"+row);
+        Integer row = roleService.deleteObject(id);
+
+        return new JsonResult("delete ok" + row);
 
     }
 
     @RequestMapping("doSaveObject")
-    public JsonResult doSaveObjecResult(Role role,Integer[] menuIds){
+    public JsonResult doSaveObjecResult(Role role, Integer[] menuIds) {
         Integer row = roleService.saveObejct(role, menuIds);
-        return new JsonResult("Insert OK"+row);
+        return new JsonResult("Insert OK" + row);
     }
 
     @RequestMapping("doFindObjectById")
     public JsonResult doFindObjectById(Integer id) {
-        RoleMenuVo roleMenuVo =  roleService.findObjectById(id);
+        RoleMenuVo roleMenuVo = roleService.findObjectById(id);
         return new JsonResult(roleMenuVo);
     }
-    
 
+    @RequestMapping("doUpdateObject")
+    public JsonResult doUpdateObject(Role role, Integer[] menuIds) {
+
+        roleService.updateObject(role, menuIds);
+
+        return new JsonResult("update ok");
+
+    }
 
 }
