@@ -1,7 +1,9 @@
-package com.cy.pj.sys.entity;
+package com.cy.pj.common.vo;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.cy.pj.sys.entity.SysDept;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable{
+public class UserDeptVo implements Serializable{
 	
 	private static final long serialVersionUID = 4625097425315699421L;
 	

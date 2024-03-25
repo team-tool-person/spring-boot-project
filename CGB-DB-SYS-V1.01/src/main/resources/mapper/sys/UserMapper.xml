@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cy.pj.sys.dao.UserDao">
+
+
+    <!-- getRowCount -->
+
+    <select id="getRowCount"> select count(*) from sys_users <if test="user != null and name != '' ">
+            <where> username like concat("%",#{username},"%") </where>
+        </if>
+    </select>
+
+    <!-- findPageObject -->
+
+    <select id="findPageObject" resultType="com.cy.pj.common.vo.UserDeptVo">
+    SELECT id, username, password, salt, email, mobile, valid, deptId, createdTime, modifiedTime,
+    createdUser, modifiedUser FROM jtsys.sys_users
+    
+    <if test="username != null and username != '' ">
+        
+        <where>
+            username like concat("%",#{username},"%");
+        </where>
+    </if>
+    limit #{startIndex},#{pageSize}
+    </select>
+</mapper>
